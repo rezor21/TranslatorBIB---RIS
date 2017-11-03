@@ -26,7 +26,7 @@
     <div class="container" ng-controller="tableController">
         <div class="row">
             <div class="col-sm-8 center-block">
-                <h1 class="text-center">Domowa biblioteka zawiera {{records.length}} książek</h1>
+                <h1 class="text-center">Tabela zawiera {{records.length}} rekordy</h1>
                 <br>
                 <span class="input-group-addon">Szukaj: </span>
                 <input type="text" class="form-control" placeholder="Jakiej słowa szukasz?" ng-model="search">
@@ -77,7 +77,7 @@
             </div>
             <div class="addbook">
                 <form name="dodaj">
-                    <p class="">Podaj dane, aby zaktualizować (następnie kliknij przycisk "aktualizuj" przy danej książce)<br> lub dodać książkę (i kliknij przycisk "dodaj" poniżej):</p>
+                    <p class="">Podaj dane, aby zaktualizować (następnie kliknij przycisk "aktualizuj" przy danym rekordzie)<br> lub dodać rekord (i kliknij przycisk "dodaj" poniżej):</p>
                     <input type="search" placeholder="tytuł" ng-model="Title" /><br>
                     <input type="search" placeholder="strona początkowa" ng-model="Start_page" /><br>
                     <input type="search" placeholder="strona końcowa" ng-model="End_page" /><br>
