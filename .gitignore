@@ -1,3 +1,34 @@
+
+#Ignore thumbnails created by Windows
+Thumbs.db
+#Ignore files built by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+.vs/
+
 Resourcer/Resourcer/Content/lucene
 
 ## Ignore Visual Studio temporary files, build results, and
@@ -218,23 +249,11 @@ FakesAssemblies/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
-
-
-#Ignore thumbnails created by Windows
-Thumbs.db
-#Ignore files built by Visual Studio
-*.exe
-*.bak
-*.cache
-[Bb]in
-[Dd]ebug*/
-*.lib
-obj/
-[Rr]elease*/
-[Tt]est[Rr]esult*
-#Nuget packages folder
-TranslatorBIB_RIS/Scripts/
-TranslatorBIB_RIS/Content/
-
 #ignore config file
 ChatMvc/packages
+
+
+#Nuget packages folder
+packages/
+TranslatorBIB_RIS/Scripts/
+TranslatorBIB_RIS/Content/
