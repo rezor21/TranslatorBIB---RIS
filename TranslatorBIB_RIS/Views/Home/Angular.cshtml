@@ -1,0 +1,160 @@
+﻿
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+    <title>Hello AngularJS</title>
+
+    <script src="~/Scripts/angular.js"></script>
+
+
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
+    <style>
+        .center-block {
+            float: none;
+        }
+    </style>
+</head>
+
+
+<body ng-app="aplikacja">
+
+    <div class="container" ng-controller="tableController">
+        <div class="row">
+            <div class="col-sm-8 center-block">
+                <h1 class="text-center">Domowa biblioteka zawiera {{records.length}} książek</h1>
+                <br>
+                <span class="input-group-addon">Szukaj: </span>
+                <input type="text" class="form-control" placeholder="Jakiej słowa szukasz?" ng-model="search">
+            </div>
+
+            <br>
+
+            <div class="table-responsive ">
+                Sortuj według:
+                <select data-ng-model="sortBy">
+                    <option selected>id</option>
+                    <option value="Title">Tytułu</option>
+                    <option value="Start_page">Strony startowej</option>
+                    <option value="End_page">Strony końcowej</option>
+                    <option value="Authors">Autora</option>
+                </select>
+
+                <table class="table table-hover table-condensed table-inverse table-striped warning">
+                    <thead class="thead-inverse">
+
+                        <tr class="info">
+                            <th ng-repeat="naglowek in ['autor', 'tytuł', 'strona początkowa', 'strona końcowa']">
+                                {{naglowek}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="record in records | filter : search | orderBy:sortBy">
+
+                            <td>{{record.Authors}}</td>
+                            <td>{{record.Title}}</td>
+                            <td>{{record.Start_page}}</td>
+                            <td>{{record.End_page}}</td>
+
+                            <td>
+                                <button class="btn btn-info" ng-click="updateOneBook(book.id)">Aktualizuj</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" ng-click="deleteOneBook(book.id)">Usuń</button>
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="addbook">
+                <form name="dodaj">
+                    <p class="">Podaj dane, aby zaktualizować (następnie kliknij przycisk "aktualizuj" przy danej książce)<br> lub dodać książkę (i kliknij przycisk "dodaj" poniżej):</p>
+                    <input type="search" placeholder="tytuł" ng-model="Title" /><br>
+                    <input type="search" placeholder="strona początkowa" ng-model="Start_page" /><br>
+                    <input type="search" placeholder="strona końcowa" ng-model="End_page" /><br>
+                    <input type="search" placeholder="autor" ng-model="Authors" /><br>
+                </form>
+                <button class="btn btn-success" ng-click="addOneRecord()">Dodaj</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        var aplikacja = angular.module('aplikacja', []);
+
+
+        aplikacja.controller('tableController', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
+
+            $http.get("/api/records/")
+                .then(function (response) {
+                    $scope.records = response.data;
+                })
+
+            $scope.deleteOneBook = function (id) {
+                var url = "/api//records/" + id;
+                $http.delete(url)
+                    .then(function (response) {
+                        $scope.del = response.data;
+                    })
+
+                window.location = location.href;
+            }
+
+            $scope.addOneRecord = function () {
+                var url = "/api/records/";
+                var param = JSON.stringify({
+                    id: 0,
+                    Authors: $scope.Authors,
+                    Title: $scope.Title,
+                    Start_page: $scope.Start_page,
+                    End_page: $scope.End_page
+
+                })
+                $http.post(url, param)
+                    .then(function (response) {
+                        $scope.dodaj = response.data;
+                    })
+
+                window.location = location.href;
+            }
+
+            $scope.updateOneBook = function (id) {
+                var url = "/api/records/" + id;
+                var param = JSON.stringify({
+                    id: id,
+                    title: $scope.title,
+                    pages: $scope.pages,
+                    Authors: $scope.Authors
+                })
+                $http.put(url, param)
+                    .then(function (response) {
+                        $scope.aktu = response.data;
+                    })
+
+                window.location = location.href;
+
+
+            }
+
+
+        }]);
+
+
+
+
+
+
+    </script>
+</body>
