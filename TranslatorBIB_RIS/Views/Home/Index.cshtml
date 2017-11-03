@@ -1,10 +1,28 @@
-﻿<div class="jumbotron">
+﻿@{
+    var fileTex = ViewData["text"];
+}
+<div class="jumbotron">
     <h1>Szybka konwersja</h1>
     <p class="lead">Wybierz plik w formacie BibTeX, a otrzymasz plik w formacie RIS i na odwrót</p>
     <p><a href="tu link bedzie" class="btn btn-success btn-lg">Konwertuj &raquo;</a></p>
 </div>
 <div class="row">
     <div class="col-md-4">
+        <h2>Przykładowe pobieranie</h2>
+
+        @using (Html.BeginForm("Index",
+                            "Home",
+                            FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+        {
+            <label for="file">Upload File:</label>
+            <input type="file" name="file" id="file" /><br><br>
+            <input type="submit" value="Upload File" />
+            @fileTex
+            <br><br>
+
+        }
+
         <h2>Zawartość</h2>
         <p>Tu tabelkę trzeba z danymi z pliku zrobić</p>
 
