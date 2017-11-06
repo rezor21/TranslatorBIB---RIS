@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TranslatorBIB_RIS.Services;
 
 namespace TranslatorBIB_RIS.Controllers
 {
     public class HomeController : Controller
     {
+        private RecordsServices _recordsServices;
         public ActionResult Index()
         {
 
@@ -19,7 +21,7 @@ namespace TranslatorBIB_RIS.Controllers
         public ActionResult Angular()
         {
 
-            ViewBag.Title = "Angular Page";
+            ViewBag.Title = "Angular";
 
             return View("Angular");
         }
@@ -41,9 +43,21 @@ namespace TranslatorBIB_RIS.Controllers
             if (file != null && file.ContentLength > 0)
                 try
                 {
+                    var supportedTypes = new[] { "bib", "ris"};
 
-                    showFile(file);
-                    ViewBag.Message = "File uploaded successfully ";
+                    var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+
+                    if (!supportedTypes.Contains(fileExt))
+                    {
+                        ModelState.AddModelError("file", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                        ViewBag.Message = "Nieprawidłowy plik";
+                        return View();
+                    }
+                    else
+                    {
+                        showFile(file);
+                        ViewBag.Message = "File uploaded successfully ";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -56,5 +70,7 @@ namespace TranslatorBIB_RIS.Controllers
 
             return View();
         }
+
+        
     }
 }

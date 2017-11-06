@@ -10,7 +10,7 @@ namespace TranslatorBIB_RIS.Services
     {
         private static RecordsServices _instance;
         private List<Record> _records;
-
+        private string text_front;
 
         private RecordsServices()
         {
@@ -54,6 +54,32 @@ namespace TranslatorBIB_RIS.Services
                     Country = "Poland",
                     City = "Rzeszów",
                     Volume = 1
+                },
+                new Record
+                {
+                    Authors = new List<string> {"Asap" },
+                    Title = "m",
+                    Release_date = new DateTime(2015, 8, 1),
+                    Publisher = "CEUR Workshop Proceedings",
+                    Editors = new List<string> {"Czaja", "Suraj"},
+                    Start_page = 1,
+                    End_page = 12,
+                    Country = "Poland",
+                    City = "Rzeszów",
+                    Volume = 1
+                },
+                new Record
+                {
+                    Authors = new List<string> {"Asap" },
+                    Title = "m",
+                    Release_date = new DateTime(2015, 8, 1),
+                    Publisher = "CEUR Workshop Proceedings",
+                    Editors = new List<string> {"Czaja", "Suraj"},
+                    Start_page = 1,
+                    End_page = 12,
+                    Country = "Poland",
+                    City = "Rzeszów",
+                    Volume = 1
                 }
 
             };
@@ -82,23 +108,85 @@ namespace TranslatorBIB_RIS.Services
             return _records;
         }
 
-        public Record GetByAuthor(List<string> authors)
+        public List<Record> GetByAuthor(List<string> authors)
         {
-            Record foundRecord = null;
+            List<Record> foundRecords = new List<Record>();
             foreach (var i in _records)
             {
                 int x = 0;
                 foreach (var j in authors)
                 {
                     int y = 0;
-                    foundRecord = _records
+                    foundRecords = _records
                     .Where(record => record.Authors[x] == authors[y])
-                .SingleOrDefault();
+                .ToList();
                     y++;
                 }
                 x++;
             }
-            return foundRecord;
+            return foundRecords;
+        }
+        public List<Record> GetByEditor(List<string> editors)
+        {
+            List<Record> foundRecords = new List<Record>();
+            foreach (var i in _records)
+            {
+                int x = 0;
+                foreach (var j in editors)
+                {
+                    int y = 0;
+                    foundRecords = _records
+                    .Where(record => record.Editors[x] == editors[y])
+                .ToList();
+                    y++;
+                }
+                x++;
+            }
+            return foundRecords;
+        }
+        public List<Record> GetByTitle(string title)
+        {
+            List<Record> foundRecords = new List<Record>();
+            foreach (var i in _records)
+            {
+                    foundRecords = _records
+                    .Where(record => record.Title.Contains(title))
+                .ToList();
+            }
+            return foundRecords;
+        }
+        public List<Record> GetByPublisher(string publisher)
+        {
+            List<Record> foundRecords = new List<Record>();
+            foreach (var i in _records)
+            {
+                foundRecords = _records
+                .Where(record => record.Publisher.Contains(publisher))
+            .ToList();
+            }
+            return foundRecords;
+        }
+        public List<Record> GetByCountry(string country)
+        {
+            List<Record> foundRecords = new List<Record>();
+            foreach (var i in _records)
+            {
+                foundRecords = _records
+                .Where(record => record.Country.Contains(country))
+            .ToList();
+            }
+            return foundRecords;
+        }
+        public List<Record> GetByCity(string city)
+        {
+            List<Record> foundRecords = new List<Record>();
+            foreach (var i in _records)
+            {
+                foundRecords = _records
+                .Where(record => record.Country.Contains(city))
+            .ToList();
+            }
+            return foundRecords;
         }
     }
 }
