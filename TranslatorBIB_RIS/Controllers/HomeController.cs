@@ -23,6 +23,86 @@ namespace TranslatorBIB_RIS.Controllers
 
             return View("Angular");
         }
+        private void parseBib(string bib)
+        {
+            List<String> nazwy = new List<string>();
+            for (int i = 0; i < bib.Length; i++)
+            {
+                if (bib[i] == '@')
+                {
+                    String nowy = "";
+                    int j = i + 1;
+                    do//nazwa np conferenc
+                    {
+                        nowy += bib[j];
+                        j += 1;
+                    } while (bib[j] != '{');
+                    i = j;
+                    nazwy.Add(nowy);
+
+                    j = i + 1;
+                    nowy = "";
+                    do//naza moskov
+                    {
+                        nowy += bib[j];
+                        j += 1;
+                    } while (bib[j] != ',');
+                    i = j;
+                    nazwy.Add(nowy);
+                    nowy = "";
+                    bool seqEnd = false;
+                    do
+                    {
+
+                        if (bib[j] == ',')
+                        {
+
+                            j += 1;
+                            do
+                            {
+                                nowy += bib[j];
+                                j += 1;
+
+                            } while (bib[j] != '=');
+                            nazwy.Add(nowy);
+                            nowy = "";
+                        }
+                        if (bib[j] == '=')
+                        {
+                            bool defFinded = false;
+                            do
+                            {
+                                j += 1;
+                                if (bib[j] == '{')
+                                {
+                                    defFinded = true;
+                                    j += 1;
+                                    do
+                                    {
+                                        nowy += bib[j];
+                                        j += 1;
+                                    } while (bib[j] != '}');
+                                    nazwy.Add(nowy);
+                                    nowy = "";
+                                }
+                            } while (defFinded == false);
+                        }
+                        j += 1;
+                        if (bib[j] == ',' && bib[j + 1] == '}')
+                            seqEnd = true;
+
+                    } while (seqEnd == false);
+
+
+                }
+
+
+            }
+            for (int i = 0; i < nazwy.Count; i++)
+            {
+                Console.WriteLine(nazwy[i]);
+            }
+        }
         private void showFile(HttpPostedFileBase file)
         {
             BinaryReader b = new BinaryReader(file.InputStream);
