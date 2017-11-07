@@ -26,18 +26,31 @@ namespace TranslatorBIB_RIS.Controllers
             return Ok(records);
         }
 
-        [HttpGet, Route("records/{authors}")]
-        public IHttpActionResult Get(string authors)
+        [HttpGet, Route("records/author/{authors}")]
+        public IHttpActionResult GetAuthor(string authors)
         {
             List<string> authorsList = new List<string>();
             authorsList.Add(authors);
-            Record record = _recordsServices.GetByAuthor(authorsList);
-            if (record == null)
+            List<Record> records = _recordsServices.GetByAuthor(authorsList);
+            if (records == null)
             {
                 return NotFound();
             }
 
-            return Ok(record);
+            return Ok(records);
+        }
+
+        [HttpGet, Route("records/title/{title}")]
+        public IHttpActionResult GetTitle(string title)
+        {
+
+            List<Record> records = _recordsServices.GetByTitle(title);
+            if (records == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(records);
         }
 
         // POST records

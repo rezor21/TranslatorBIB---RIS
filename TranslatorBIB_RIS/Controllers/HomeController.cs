@@ -39,7 +39,6 @@ namespace TranslatorBIB_RIS.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
-            string directory = @"D:\Temp\";
 
             if (file != null && file.ContentLength > 0)
                 try
@@ -51,18 +50,13 @@ namespace TranslatorBIB_RIS.Controllers
                     if (!supportedTypes.Contains(fileExt))
                     {
                         ModelState.AddModelError("file", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                        ViewBag.Message = "Nieprawidłowy plik";
                         return View();
-                    }
-                    if (file.ContentType == "application/octet-stream" && file.FileName.Contains(".bib") || file.FileName.Contains(".ris") && file.ContentType == "application/x-Research-Info-Systems")
-                    {
-                        showFile(file);
-                        var fileName = Path.GetFileName(file.FileName);
-                        file.SaveAs(Path.Combine(directory, fileName));
-                        ViewBag.Message = "File uploaded successfully ";
                     }
                     else
                     {
-                        ViewBag.Message = "Nieprawidłowy plik";
+                        showFile(file);
+                        ViewBag.Message = "File uploaded successfully ";
                     }
                 }
                 catch (Exception ex)
