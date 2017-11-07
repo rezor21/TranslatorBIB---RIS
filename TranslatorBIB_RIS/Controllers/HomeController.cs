@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TranslatorBIB_RIS.Services;
 
 namespace TranslatorBIB_RIS.Controllers
 {
     public class HomeController : Controller
     {
+        private RecordsServices _recordsServices;
         public ActionResult Index()
         {
 
@@ -19,7 +21,7 @@ namespace TranslatorBIB_RIS.Controllers
         public ActionResult Angular()
         {
 
-            ViewBag.Title = "Angular Page";
+            ViewBag.Title = "Angular";
 
             return View("Angular");
         }
@@ -37,13 +39,31 @@ namespace TranslatorBIB_RIS.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
+            string directory = @"D:\Temp\";
 
             if (file != null && file.ContentLength > 0)
                 try
                 {
+                    var supportedTypes = new[] { "bib", "ris"};
 
-                    showFile(file);
-                    ViewBag.Message = "File uploaded successfully ";
+                    var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+
+                    if (!supportedTypes.Contains(fileExt))
+                    {
+                        ModelState.AddModelError("file", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                        return View();
+                    }
+                    if (file.ContentType == "application/octet-stream" && file.FileName.Contains(".bib") || file.FileName.Contains(".ris") && file.ContentType == "application/x-Research-Info-Systems")
+                    {
+                        showFile(file);
+                        var fileName = Path.GetFileName(file.FileName);
+                        file.SaveAs(Path.Combine(directory, fileName));
+                        ViewBag.Message = "File uploaded successfully ";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Nieprawidłowy plik";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -56,5 +76,7 @@ namespace TranslatorBIB_RIS.Controllers
 
             return View();
         }
+
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿@{
     var fileTex = ViewData["text"];
+    var textFront = ViewData["text"];
 }
 <div class="jumbotron">
     <h1>Szybka konwersja</h1>
@@ -16,13 +17,18 @@
                             new { enctype = "multipart/form-data" }))
         {
             <label for="file">Upload File:</label>
-            <input type="file" name="file" id="file" /><br><br>
+            <input type="file" name="file" id="file"  accept="text/x-bibtex"/><br><br>
             <input type="submit" value="Upload File" />
             @fileTex
             <br><br>
+          
+            
 
-        }
+}
 
+ 
+        
+        
         <h2>Zawartość</h2>
         <p>Tu tabelkę trzeba z danymi z pliku zrobić</p>
 
