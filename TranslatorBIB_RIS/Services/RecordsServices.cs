@@ -10,7 +10,6 @@ namespace TranslatorBIB_RIS.Services
     {
         private static RecordsServices _instance;
         private List<Record> _records;
-        private string text_front;
 
         private RecordsServices()
         {
@@ -188,5 +187,7 @@ namespace TranslatorBIB_RIS.Services
             }
             return foundRecords;
         }
+
+        
     }
 }

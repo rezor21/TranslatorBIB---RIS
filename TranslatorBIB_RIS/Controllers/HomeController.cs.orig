@@ -10,11 +10,7 @@ namespace TranslatorBIB_RIS.Controllers
 {
     public class HomeController : Controller
     {
-        private RisServices _risServices;
-        public HomeController()
-        {
-            _risServices = RisServices.Instance;
-        }
+        private RecordsServices _recordsServices;
         public ActionResult Index()
         {
 
@@ -37,12 +33,13 @@ namespace TranslatorBIB_RIS.Controllers
 
 
             ViewData["Text"] = result;
-            _risServices.parseRis(result);
+
         }
 
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
+            string directory = @"D:\Temp\";
 
             if (file != null && file.ContentLength > 0)
                 try
@@ -54,6 +51,21 @@ namespace TranslatorBIB_RIS.Controllers
                     if (!supportedTypes.Contains(fileExt))
                     {
                         ModelState.AddModelError("file", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+<<<<<<< HEAD
+                        return View();
+                    }
+                    if (file.ContentType == "application/octet-stream" && file.FileName.Contains(".bib") || file.FileName.Contains(".ris") && file.ContentType == "application/x-Research-Info-Systems")
+                    {
+                        showFile(file);
+                        var fileName = Path.GetFileName(file.FileName);
+                        file.SaveAs(Path.Combine(directory, fileName));
+                        ViewBag.Message = "File uploaded successfully ";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Nieprawidłowy plik";
+                    }
+=======
                         ViewBag.Message = "Nieprawidłowy plik";
                         return View();
                     }
@@ -62,6 +74,7 @@ namespace TranslatorBIB_RIS.Controllers
                         showFile(file);
                         ViewBag.Message = "File uploaded successfully ";
                     }
+>>>>>>> f8e64269e3c9759270674f0532c2b5d4e90d265f
                 }
                 catch (Exception ex)
                 {
@@ -76,7 +89,5 @@ namespace TranslatorBIB_RIS.Controllers
         }
 
         
-
-
     }
 }
