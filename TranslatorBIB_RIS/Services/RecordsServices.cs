@@ -8,82 +8,90 @@ namespace TranslatorBIB_RIS.Services
 {
     public class RecordsServices
     {
-        private static RecordsServices _instance;
+        private RisServices _risServices;
         private List<Record> _records;
-
-        private RecordsServices()
+        private static RecordsServices _instance;
+        public RecordsServices()
         {
-            _records = new List<Record>
-            {
-                new Record
-                {
-                    Authors = new List<string> {"Moshkov" },
-                    Title = "Dynamic Programming Approach for Study of Decision Trees",
-                    Release_date = new DateTime(2015, 8, 1),
-                    Publisher = "CEUR Workshop Proceedings",
-                    Editors = new List<string> {"Czaja", "Suraj"},
-                    Start_page = 1,
-                    End_page = 1,
-                    Country = "Poland",
-                    City = "Rzeszów",
-                    Volume = 1
-                },
-                new Record
-                {
-                    Authors = new List<string> {"Moshkov2" },
-                    Title = "a",
-                    Release_date = new DateTime(2015, 8, 1),
-                    Publisher = "CEUR Workshop Proceedings",
-                    Editors = new List<string> {"Czaja", "Suraj"},
-                    Start_page = 1,
-                    End_page = 25,
-                    Country = "Poland",
-                    City = "Rzeszów",
-                    Volume = 2
-                },
-                new Record
-                {
-                    Authors = new List<string> {"Moshkov3" },
-                    Title = "v",
-                    Release_date = new DateTime(2015, 8, 1),
-                    Publisher = "CEUR Workshop Proceedings",
-                    Editors = new List<string> {"Czaja", "Suraj"},
-                    Start_page = 1,
-                    End_page = 12,
-                    Country = "Poland",
-                    City = "Rzeszów",
-                    Volume = 1
-                },
-                new Record
-                {
-                    Authors = new List<string> {"Asap" },
-                    Title = "m",
-                    Release_date = new DateTime(2015, 8, 1),
-                    Publisher = "CEUR Workshop Proceedings",
-                    Editors = new List<string> {"Czaja", "Suraj"},
-                    Start_page = 1,
-                    End_page = 12,
-                    Country = "Poland",
-                    City = "Rzeszów",
-                    Volume = 1
-                },
-                new Record
-                {
-                    Authors = new List<string> {"Asap" },
-                    Title = "m",
-                    Release_date = new DateTime(2015, 8, 1),
-                    Publisher = "CEUR Workshop Proceedings",
-                    Editors = new List<string> {"Czaja", "Suraj"},
-                    Start_page = 1,
-                    End_page = 12,
-                    Country = "Poland",
-                    City = "Rzeszów",
-                    Volume = 1
-                }
-
-            };
-
+            _risServices = RisServices.Instance;
+            _records = RisServices.Instance._records;
         }
+        
+        
+
+        //private RecordsServices()
+        //{
+        //    _records = new List<Record>
+        //    {
+        //        new Record
+        //        {
+        //            Authors = new List<string> {"Moshkov" },
+        //            Title = "Dynamic Programming Approach for Study of Decision Trees",
+        //            Release_date = new DateTime(2015, 8, 1),
+        //            Publisher = "CEUR Workshop Proceedings",
+        //            Editors = new List<string> {"Czaja", "Suraj"},
+        //            Start_page = 1,
+        //            End_page = 1,
+        //            Country = "Poland",
+        //            City = "Rzeszów",
+        //            Volume = 1
+        //        },
+        //        new Record
+        //        {
+        //            Authors = new List<string> {"Moshkov2" },
+        //            Title = "a",
+        //            Release_date = new DateTime(2015, 8, 1),
+        //            Publisher = "CEUR Workshop Proceedings",
+        //            Editors = new List<string> {"Czaja", "Suraj"},
+        //            Start_page = 1,
+        //            End_page = 25,
+        //            Country = "Poland",
+        //            City = "Rzeszów",
+        //            Volume = 2
+        //        },
+        //        new Record
+        //        {
+        //            Authors = new List<string> {"Moshkov3" },
+        //            Title = "v",
+        //            Release_date = new DateTime(2015, 8, 1),
+        //            Publisher = "CEUR Workshop Proceedings",
+        //            Editors = new List<string> {"Czaja", "Suraj"},
+        //            Start_page = 1,
+        //            End_page = 12,
+        //            Country = "Poland",
+        //            City = "Rzeszów",
+        //            Volume = 1
+        //        },
+        //        new Record
+        //        {
+        //            Authors = new List<string> {"Asap" },
+        //            Title = "m",
+        //            Release_date = new DateTime(2015, 8, 1),
+        //            Publisher = "CEUR Workshop Proceedings",
+        //            Editors = new List<string> {"Czaja", "Suraj"},
+        //            Start_page = 1,
+        //            End_page = 12,
+        //            Country = "Poland",
+        //            City = "Rzeszów",
+        //            Volume = 1
+        //        },
+        //        new Record
+        //        {
+        //            Authors = new List<string> {"Asap" },
+        //            Title = "m",
+        //            Release_date = new DateTime(2015, 8, 1),
+        //            Publisher = "CEUR Workshop Proceedings",
+        //            Editors = new List<string> {"Czaja", "Suraj"},
+        //            Start_page = 1,
+        //            End_page = 12,
+        //            Country = "Poland",
+        //            City = "Rzeszów",
+        //            Volume = 1
+        //        }
+
+        //    };
+
+        //}
 
         public static RecordsServices Instance
         {
