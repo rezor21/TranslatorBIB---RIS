@@ -173,28 +173,18 @@ namespace TranslatorBIB_RIS.Services
             }
             return foundRecords;
         }
-        public List<Record> GetByCountry(string country)
+        public List<Record> GetByAdress(string country)
         {
             List<Record> foundRecords = new List<Record>();
             foreach (var i in _records)
             {
                 foundRecords = _records
-                .Where(record => record.Country.Contains(country))
+                .Where(record => record.Adress.Contains(country))
             .ToList();
             }
             return foundRecords;
         }
-        public List<Record> GetByCity(string city)
-        {
-            List<Record> foundRecords = new List<Record>();
-            foreach (var i in _records)
-            {
-                foundRecords = _records
-                .Where(record => record.Country.Contains(city))
-            .ToList();
-            }
-            return foundRecords;
-        }
+       
 
         
     }

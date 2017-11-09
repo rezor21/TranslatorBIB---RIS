@@ -48,10 +48,11 @@ namespace TranslatorBIB_RIS.Services
                         record.Title = risrecord.Value;
                         break;
                     case "PY":
-                        //record.Release_date = risrecord.Value;
+                        DateTime dataValue = parseDate(risrecord.Value);
+                        record.Release_date = dataValue;
                         break;
                     case "JF":
-                        
+                        //to nie wiem czy ma być
                         break;
                     case "VL":
                         x = 0;
@@ -84,7 +85,7 @@ namespace TranslatorBIB_RIS.Services
                         record.Editors.Add(risrecord.Value);
                         break;
                     case "CY":
-                        
+                        record.Adress = risrecord.Value;
                         break;
                     case "ER":
                         if(risrecord.Value=="0" || risrecord.Value == "")
@@ -95,16 +96,10 @@ namespace TranslatorBIB_RIS.Services
                         break;
 
                 }
-                
-                
-               
-            }
-            foreach (var re in _records)
-            {
-                Console.WriteLine(re.Type);
-            }
 
-            Console.WriteLine(_records.Count);
+            }
+           
+            
         }
 
         public void readRis(string ris)
@@ -118,6 +113,116 @@ namespace TranslatorBIB_RIS.Services
                     _RISrecords.Add(new RisRecord(tag, getValue(ris, i)));
                 }
             }
+        }
+
+        public DateTime parseDate(string dataString)
+        {
+            DateTime data = new DateTime();
+            string text = "";
+            int number=0;
+            int year = 0;
+            int month = 0;
+            int day = 0;
+            for (int i = 0; i < dataString.Length; i++)
+            {
+                text += dataString[i];
+                i++;
+                text += dataString[i];
+                i++;
+                text += dataString[i];
+                i++;
+                text += dataString[i];
+
+                if (Int32.TryParse(text, out number))
+                {
+                    year = number;
+                }
+                else { break; }
+                try
+                {
+                    i++;
+                    if (dataString[i] != '/')
+                    {
+                        
+                    }
+                    else { try { i++; } catch { break; } }
+                }
+                catch
+                {
+                    break;
+                } 
+                
+                
+                try
+                {
+                    text = "";
+                    text += dataString[i];
+                    i++;
+                    text += dataString[i];
+                    
+                    if (text != "00")
+                    {
+                        if (Int32.TryParse(text, out number))
+                        {
+                            month = number;
+                        }
+                        else { break; }
+                    }
+                    else { break; }
+                }
+                catch
+                {
+                    break;
+                }
+                if (month != 0 && month != 1)
+                {
+                    data = new DateTime(year, month, 1);
+                }
+                try
+                {
+                    i++;
+                    if (dataString[i] != '/')
+                    {
+
+                    }
+                    else { try { i++; } catch { break; } }
+                }
+                catch
+                {
+                    break;
+                }
+                try
+                {
+                    text = "";
+                    text += dataString[i];
+                    i++;
+                    text += dataString[i];
+                    
+                    if (text != "00")
+                    {
+                        if (Int32.TryParse(text, out number))
+                        {
+                            day = number;
+                        }
+                        else { break; }
+                    }
+                    else { try { i++; } catch { break; } }
+                }
+                catch
+                {
+                    break;
+                }
+                
+               
+                if (month != 0 && day != 0 && month != 1 && day != 1)
+                {
+
+                    data = new DateTime(year, month, day);
+                }
+
+            }
+            
+            return data;
         }
 
         public bool CheckSeparator(string ris, int i)

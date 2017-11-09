@@ -15,8 +15,7 @@ namespace TranslatorBIB_RIS.Models
         public int Volume { get; set; }
         public int Start_page { get; set; }
         public int End_page { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
+        public string Adress { get; set; }
         public string Publisher { get; set; }
 
        
