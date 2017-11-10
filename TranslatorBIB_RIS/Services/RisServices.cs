@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using TranslatorBIB_RIS.Models;
@@ -26,7 +27,7 @@ namespace TranslatorBIB_RIS.Services
             }
         }
 
-        public void parseRis(string ris)
+        public void parseFromRis(string ris)
         {
             _records.Clear();
             _RISrecords.Clear();
@@ -98,7 +99,7 @@ namespace TranslatorBIB_RIS.Services
                 }
 
             }
-           
+            
             
         }
 
@@ -276,6 +277,145 @@ namespace TranslatorBIB_RIS.Services
             return tag;
         }
 
-        
+        public List<RisRecord> recordsToRisRecords(List<Record> recordsList)
+        {
+            List<RisRecord> risRecords = new List<RisRecord>();
+            foreach (var record in recordsList)
+            {
+
+                int x = 0;
+                RisRecord risrecord;
+
+                if (record.Type != "" && record.Type != " ")
+                {
+                    risrecord = new RisRecord("TY", record.Type);
+                    risRecords.Add(risrecord);
+                }
+                if (record.Publisher != "" && record.Publisher != " ")
+                {
+                    risrecord = new RisRecord("PB", record.Publisher);
+                    risRecords.Add(risrecord);
+                }
+                if (record.Title != "" && record.Title != " ")
+                {
+                    risrecord = new RisRecord("TI", record.Title);
+                    risRecords.Add(risrecord);
+                }
+                if (record.Release_date.Month == 0 && record.Release_date.Day == 0 && record.Release_date.Year == 0 )
+                {
+                }
+                else
+                {
+                    if (record.Release_date.Month != 0 && record.Release_date.Day != 0 && record.Release_date.Day != 1)
+                    {
+                        risrecord = new RisRecord("PY", record.Release_date.Year.ToString() + "/" + record.Release_date.Month.ToString() + "/" + record.Release_date.Day.ToString());
+                    }
+                    else
+                    {
+                        if (record.Release_date.Month != 0)
+                        {
+                            risrecord = new RisRecord("PY", record.Release_date.Year.ToString() + "/" + record.Release_date.Month.ToString());
+                        }
+                        else
+                        {
+                            risrecord = new RisRecord("PY", record.Release_date.Year.ToString());
+                        }
+                    }
+                    risRecords.Add(risrecord);
+                }
+                if (record.Volume.ToString() != "" && record.Volume != 0)
+                {
+                    risrecord = new RisRecord("VL", record.Volume.ToString());
+                    risRecords.Add(risrecord);
+                }
+                if (record.Start_page.ToString() != "")
+                {
+                    risrecord = new RisRecord("SP", record.Start_page.ToString());
+                    risRecords.Add(risrecord);
+                }
+                if (record.End_page.ToString() != "" && record.End_page != 0)
+                {
+                    risrecord = new RisRecord("EP", record.End_page.ToString());
+                    risRecords.Add(risrecord);
+                }
+                if (record.Authors.Count > 0)
+                {
+                    x = 0;
+                    foreach (var author in record.Authors)
+                    {
+                        if (author != "" && author != " ")
+                        {
+                            risrecord = new RisRecord("AU", record.Authors[x]);
+                            risRecords.Add(risrecord);
+                            x++;
+                        }
+                    }
+
+                }
+                if (record.Authors.Count > 0)
+                {
+                    x = 0;
+                    foreach (var editor in record.Editors)
+                    {
+                        if (editor != "" && editor != " ")
+                        {
+                            risrecord = new RisRecord("ED", record.Editors[x]);
+                            risRecords.Add(risrecord);
+                            x++;
+                        }
+                    }
+
+                }
+                if (record.Adress != "" && record.Adress != " ")
+                {
+                   risrecord = new RisRecord("CY", record.Adress);
+                    risRecords.Add(risrecord);
+                }
+
+                risrecord = new RisRecord("ER", "0");
+                risRecords.Add(risrecord);
+            }
+            return risRecords;
+        }
+
+        public List<RisRecord> parseToRis(List<Record> records)
+        {
+            List<RisRecord> RISrecords = new List<RisRecord>();
+            RISrecords = recordsToRisRecords(records);
+
+            string risstring="";
+            string separator = " - ";
+            string endofline = "\r\n";
+
+            foreach(var risrecord in RISrecords)
+            {
+                risstring += risrecord.Tag;
+                risstring += separator;
+                risstring += risrecord.Value;
+                risstring += endofline;
+            }
+
+            saveAsRISfile(risstring);
+
+            return RISrecords;
+        }
+
+        public void saveAsRISfile(string text)
+        {
+
+            var path = Path.GetTempPath() + "ris.ris";
+            
+            try
+            {
+                System.IO.File.WriteAllText(@path, text);
+            }
+            catch
+            {
+                Exception ex = new OutOfMemoryException();
+            }
+        }
+
+
+
     }
 }

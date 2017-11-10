@@ -31,13 +31,18 @@ namespace TranslatorBIB_RIS.Controllers
         }
         private void showFile(HttpPostedFileBase file)
         {
+            var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+
             BinaryReader b = new BinaryReader(file.InputStream);
             byte[] binData = b.ReadBytes(file.ContentLength);
             string result = System.Text.Encoding.UTF8.GetString(binData);
 
-
             ViewData["Text"] = result;
-            _risServices.parseRis(result);
+            if(fileExt == "ris")
+            {
+                _risServices.parseFromRis(result);
+            }
+            
         }
 
         [System.Web.Mvc.HttpPost]
@@ -60,6 +65,7 @@ namespace TranslatorBIB_RIS.Controllers
                     else
                     {
                         showFile(file);
+
                         ViewBag.Message = "File uploaded successfully ";
                     }
                 }
@@ -71,11 +77,21 @@ namespace TranslatorBIB_RIS.Controllers
             {
                 ViewBag.Message = "You have not specified a file.";
             }
-
+           
             return View();
         }
 
-        
+        [HttpGet, Route("Home/Download")]
+        public ActionResult Download()
+        {
+            _risServices.parseToRis(_risServices._records);
+            
+            var path = System.IO.Path.GetTempPath() + "ris.ris";
+
+            //string directoryPath = Server.MapPath(path);
+            return File(path, "application/octet-stream", "ris.ris");
+        }
+
 
 
     }

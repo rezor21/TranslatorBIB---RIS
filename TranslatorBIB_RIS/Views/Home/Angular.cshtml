@@ -48,18 +48,24 @@
                     <thead class="thead-inverse">
 
                         <tr class="info">
-                            <th ng-repeat="naglowek in ['autor', 'tytuł', 'strona początkowa', 'strona końcowa']">
+                            <th ng-repeat="naglowek in ['typ','autor', 'tytuł', 'strona początkowa', 'strona końcowa','data wydania','edytorzy', 'wolumin/część', 'miejsce wydania', 'Opublikowane przez']">
                                 {{naglowek}}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="record in records | filter : search | orderBy:sortBy">
-
+                            <td>{{record.Type}}</td>
                             <td>{{record.Authors}}</td>
                             <td>{{record.Title}}</td>
                             <td>{{record.Start_page}}</td>
                             <td>{{record.End_page}}</td>
+                            <td>{{record.Release_date}}</td>
+                            <td>{{record.Editors}}</td>
+                            <td>{{record.Volume}}</td>
+                            <td>{{record.Adress}}</td>
+                            <td>{{record.Publisher}}</td>
+
 
                             <td>
                                 <button class="btn btn-info" ng-click="updateOneBook(book.id)">Aktualizuj</button>
