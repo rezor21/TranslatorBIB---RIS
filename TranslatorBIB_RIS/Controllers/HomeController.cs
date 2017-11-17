@@ -25,10 +25,10 @@ namespace TranslatorBIB_RIS.Controllers
 
             return View("Angular");
         }
-        private  List<BibContein> ParseBib(string bib)
+        private List<BibContein> ParseBib(string bib)
         {
-            List <BibContein> bibModel = new List<BibContein>();
-            List<String> nazwy = new List<string>();
+            List<BibContein> bibModel = new List<BibContein>();
+            
             for (int i = 0; i < bib.Length; i++)
             {
 
@@ -42,108 +42,71 @@ namespace TranslatorBIB_RIS.Controllers
                         nowy += bib[j];
                         j += 1;
                     } while (bib[j] != '{');
-                    
                     // nazwy.Add(nowy);
                     newBib.bibType = nowy;
-
-
-                    if (nowy == "Comment")
-                        break;
-                    
-                    if (bib[j] == '{')
+                  
+                   
+                    j += 1;
+                    if (nowy != "Comment")
                     {
                         nowy = "";
-                        j += 1;
-                        do//naza moskov
+                        do//klucz
                         {
-
-
                             nowy += bib[j];
                             j += 1;
-
-                        } while (bib[j] !=',');
-                        i = j;
+                        } while (bib[j] != ',');
                         newBib.bibKey = nowy;
+
                         nowy = "";
                     }
-
-                    bool seqEnd = false;
+                    else break;
+                  
+                    nowy = "";
+                    bool end = false;
                     do
                     {
 
-                        if (bib[j] == ',')
-                        {
-
-                            j += 1;
-                            bool endTag = false;
-                            do
-                            {
-                                nowy += bib[j];
-                                if (bib[j] == '}')
-                                {
-                                    endTag = true;
-                                    break;
-                                }
-                                j += 1;
-                                if (j >= bib.Length-1)
-                                    break;
-
-                            } while (bib[j] != '=');
-                            // nazwy.Add(nowy);
-                            if (endTag == false)
-                            {
-                                newBib.bibTags.Add(nowy);
-                            }
-                          
-                            nowy = "";
-                            
-                        }
                         if (bib[j] == '=')
                         {
-                            bool defFinded = false;
+                            int jL = j - 1;//tag
+                            int jK = j + 3;//value
+                            do
+                            {
+
+
+                                nowy = bib[jL] + nowy;
+                                jL -= 1;
+                            } while (bib[jL] != ',');
+                            newBib.bibTags.Add(nowy);
+                            nowy = "";
                             do
                             {
                                 
-                                nowy += bib[j];
-                                j += 1;
-                                if (bib[j+1] == ',')
-                                    break;
-                                if (bib[j] == '{')
-                                {
-                                    nowy = "";
-                                    defFinded = true;
-                                    j += 1;
-                                    do
-                                    {
-                                        nowy += bib[j];
-                                        j += 1;
-                                    } while (bib[j] != '}');
-                                    //  nazwy.Add(nowy);
-                                                                   
-                                }
-                            } while (defFinded == false);
+                                nowy += bib[jK];
+                                jK += 1;
+                                
+                            } while (bib[jK] != '}');
+
+                          
                             newBib.bibValues.Add(nowy);
                             nowy = "";
+
+                            if (bib[jK + 4]=='}')
+                                end = true;
                         }
+                        
                         j += 1;
-                        if (j >= bib.Length)
-                            break;
-                        if (bib[j] == ',' && bib[j + 1] == '}')
-                            seqEnd = true;
 
-                    } while (seqEnd == false);
-
+                    } while (end!=true);
+                    i = j;
                     bibModel.Add(newBib);
+                    
 
                 }
                 
-
+             
             }
             return bibModel;
-            //for (int i = 0; i < nazwy.Count; i++)
-            //{
-            //    Console.WriteLine(nazwy[i]);
-            //}
         }
         private string fileToString(HttpPostedFileBase file)
         {

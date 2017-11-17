@@ -33,16 +33,18 @@
             foreach (var bib in Model)
             {
                 
-               <p>Typ :<<<<<<<<<<<<<<<<< @bib.bibType</p>
-               <p>Klucz :<<<<<<<<<<<<<<<< @bib.bibKey</p>
-               foreach(var tags in bib.bibTags){
-                    <br>
+               <p>Typ : @bib.bibType</p>
+               <p>Klucz :@bib.bibKey</p>
+            
+                foreach (var tags in bib.bibTags)
+                {
+                    
                    <p>Tag: @tags</p>
 
                 }
                 foreach (var tags in bib.bibValues)
                 {
-                    <br>
+                    
                     <p>Value: @tags</p>
 
                 }
