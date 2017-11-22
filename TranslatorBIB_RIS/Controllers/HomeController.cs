@@ -156,8 +156,20 @@ namespace TranslatorBIB_RIS.Controllers
                     else
                     {
                         //showFile(file);
-                        bib=fileToString(file);
                         
+                        if (fileExt == "bib")
+                        {
+                            bib = fileToString(file);
+                            return View(ParseBib(bib));
+                        }
+                        if (fileExt == "ris")
+                        {
+                            BinaryReader b = new BinaryReader(file.InputStream);
+                            byte[] binData = b.ReadBytes(file.ContentLength);
+                            string result = System.Text.Encoding.UTF8.GetString(binData);
+                            _risServices.parseFromRis(result);
+                        }
+
                         ViewBag.Message = "File uploaded successfully ";
                     }
                 }
@@ -170,7 +182,7 @@ namespace TranslatorBIB_RIS.Controllers
                 ViewBag.Message = "You have not specified a file.";
             }
            
-            return View(ParseBib(bib));
+            return View();
         }
 
         [HttpGet, Route("Home/DownloadRIS")]
