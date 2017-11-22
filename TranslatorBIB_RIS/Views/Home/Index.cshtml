@@ -1,7 +1,9 @@
 ﻿@{
     var fileTex = ViewData["text"];
     var textFront = ViewData["text"];
+    
 }
+@model List<TranslatorBIB_RIS.Models.BibContein >
 <div class="jumbotron">
     <h1>Szybka konwersja</h1>
     <p class="lead">Wybierz plik w formacie BibTeX, a otrzymasz plik w formacie RIS i na odwrót</p>
@@ -10,25 +12,50 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Wybierz plik źródłowy:</h2>
-
+        
+       
         @using (Html.BeginForm("Index",
-                            "Home",
-                            FormMethod.Post,
-                            new { enctype = "multipart/form-data" }))
+                    "Home",
+                    FormMethod.Post,
+                    new { enctype = "multipart/form-data" }))
         {
             <label for="file">Upload File:</label>
             <input type="file" name="file" id="file"  accept="text/x-bibtex"/><br><br>
             <input type="submit" value="Upload File" />
-            @fileTex
-            <br><br>
-          
+            @*@fileTex*@
+           <br><br>
+                    
+         }
+        @ViewBag.Message
+        @if (Model != null)
+        {
             
+            foreach (var bib in Model)
+            {
+                
+               <p>Typ : @bib.bibType</p>
+               <p>Klucz :@bib.bibKey</p>
+            
+                foreach (var tags in bib.bibTags)
+                {
+                    
+                   <p>Tag: @tags</p>
 
-}
-        
- 
-        
-        
+                }
+                foreach (var tags in bib.bibValues)
+                {
+                    
+                    <p>Value: @tags</p>
+
+                }
+
+            }
+
+        }
+       
+
+
+
         <h2>Zawartość</h2>
         <p>Tu tabelkę trzeba z danymi z pliku zrobić</p>
 
