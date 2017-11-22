@@ -257,5 +257,5 @@ ChatMvc/packages
 packages/
 *.orig*
 TranslatorBiB_RIS/Controllers/HomeController.cs.orig
-/TranslatorBIB_RIS/Controllers/HomeController.cs.orig
-/TranslatorBIB_RIS/Controllers/HomeController.cs.orig
+*.cs.orig
+*.*.orig
