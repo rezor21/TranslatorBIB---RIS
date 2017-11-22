@@ -10,10 +10,14 @@ namespace TranslatorBIB_RIS.Controllers
 {
     public class HomeController : Controller
     {
+        private RecordsServices _recordServices;
         private RisServices _risServices;
+        private BibServices _bibServices;
         public HomeController()
         {
+            _recordServices = RecordsServices.Instance;
             _risServices = RisServices.Instance;
+            _bibServices = BibServices.Instance;
         }
         public ActionResult Index()
         {
@@ -29,89 +33,7 @@ namespace TranslatorBIB_RIS.Controllers
 
             return View("Angular");
         }
-        private List<BibContein> ParseBib(string bib)
-        {
-            List<BibContein> bibModel = new List<BibContein>();
-            
-            for (int i = 0; i < bib.Length; i++)
-            {
-
-                if (bib[i] == '@')
-                {
-                    BibContein newBib = new BibContein();
-                    String nowy = "";
-                    int j = i + 1;
-                    do//nazwa np conferenc
-                    {
-                        nowy += bib[j];
-                        j += 1;
-                    } while (bib[j] != '{');
-                    // nazwy.Add(nowy);
-                    newBib.bibType = nowy;
-                  
-                   
-                    j += 1;
-                    if (nowy != "Comment")
-                    {
-                        nowy = "";
-                        do//klucz
-                        {
-                            nowy += bib[j];
-                            j += 1;
-                        } while (bib[j] != ',');
-                        newBib.bibKey = nowy;
-
-                        nowy = "";
-                    }
-                    else break;
-                  
-                    nowy = "";
-                    bool end = false;
-                    do
-                    {
-
-                        if (bib[j] == '=')
-                        {
-                            int jL = j - 1;//tag
-                            int jK = j + 3;//value
-                            do
-                            {
-
-
-                                nowy = bib[jL] + nowy;
-                                jL -= 1;
-                            } while (bib[jL] != ',');
-                            newBib.bibTags.Add(nowy);
-                            nowy = "";
-                            do
-                            {
-                                
-                                nowy += bib[jK];
-                                jK += 1;
-                                
-                            } while (bib[jK] != '}');
-
-                          
-                            newBib.bibValues.Add(nowy);
-                            nowy = "";
-
-                            if (bib[jK + 4]=='}')
-                                end = true;
-                        }
-                        
-                        j += 1;
-
-                    } while (end!=true);
-                    i = j;
-                    bibModel.Add(newBib);
-                    
-
-                }
-                
-             
-            }
-            return bibModel;
-        }
+        
         private string fileToString(HttpPostedFileBase file)
         {
             BinaryReader b = new BinaryReader(file.InputStream);
@@ -139,7 +61,7 @@ namespace TranslatorBIB_RIS.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
-            string bib = "@Pusto{},}";
+            
             if (file != null && file.ContentLength > 0)
                 try
                 {
@@ -159,15 +81,14 @@ namespace TranslatorBIB_RIS.Controllers
                         
                         if (fileExt == "bib")
                         {
+                            string bib = "@Pusto{},}";
                             bib = fileToString(file);
-                            return View(ParseBib(bib));
+                            return View(_bibServices.ParseBib(bib));
                         }
                         if (fileExt == "ris")
                         {
-                            BinaryReader b = new BinaryReader(file.InputStream);
-                            byte[] binData = b.ReadBytes(file.ContentLength);
-                            string result = System.Text.Encoding.UTF8.GetString(binData);
-                            _risServices.parseFromRis(result);
+                            string ris = fileToString(file);
+                            _risServices.parseFromRis(ris);
                         }
 
                         ViewBag.Message = "File uploaded successfully ";
@@ -188,9 +109,9 @@ namespace TranslatorBIB_RIS.Controllers
         [HttpGet, Route("Home/DownloadRIS")]
         public ActionResult DownloadRIS()
         {
-            if (_risServices._records.Count != 0)
+            if (_recordServices.GetAll().Count != 0)
             {
-                _risServices.parseToRis(_risServices._records);
+                _risServices.parseToRis(_recordServices.GetAll());
 
                 var path = System.IO.Path.GetTempPath() + "ris.ris";
 

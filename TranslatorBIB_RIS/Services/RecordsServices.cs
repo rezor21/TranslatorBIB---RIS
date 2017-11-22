@@ -11,13 +11,6 @@ namespace TranslatorBIB_RIS.Services
         private RisServices _risServices;
         private List<Record> _records;
         private static RecordsServices _instance;
-        public RecordsServices()
-        {
-            _risServices = RisServices.Instance;
-            _records = RisServices.Instance._records;
-        }
-        
-        
 
         public static RecordsServices Instance
         {
@@ -26,6 +19,7 @@ namespace TranslatorBIB_RIS.Services
                 if (_instance == null)
                 {
                     _instance = new RecordsServices();
+                    _instance._records = new List<Record>();
                 }
                 return _instance;
             }

@@ -10,8 +10,9 @@ namespace TranslatorBIB_RIS.Services
     public class RisServices
     {
         private static RisServices _instance;
+        private static RecordsServices _recordServices;
         private List<RisRecord> _RISrecords;
-        public List<Record> _records;
+        private List<Record> _records;
 
         public static RisServices Instance
         {
@@ -21,7 +22,9 @@ namespace TranslatorBIB_RIS.Services
                 {
                     _instance = new RisServices();
                     _instance._RISrecords = new List<RisRecord>();
-                    _instance._records = new List<Record>();
+                    _recordServices = RecordsServices.Instance;
+                    _instance._records = _recordServices.GetAll();
+                    
                 }
                 return _instance;
             }
