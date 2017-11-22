@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <h2>Przykładowe pobieranie</h2>
+        <h2>Wybierz plik źródłowy:</h2>
 
         @using (Html.BeginForm("Index",
                             "Home",
@@ -25,7 +25,7 @@
             
 
 }
-
+        
  
         
         
@@ -37,20 +37,24 @@
         <h2>Wybierz opcje filtrowania</h2>
         <p>checkbox'y w takim stylu</p>
         <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-warning">
+            <label class="btn btn-info">
                 <input type="checkbox"> Opcja 1
             </label>
-            <label class="btn btn-danger">
+            <label class="btn btn-info">
                 <input type="checkbox"> Opcja 2
             </label>
-            <label class="btn btn-primary">
+            <label class="btn btn-info">
                 <input type="checkbox"> Opcja 3
             </label>
         </div>
+        <p><a class="btn btn-primary" href="">Filtruj</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Zapisz jako</h2>
-        <p>Zapisanie do pliku</p>
-        <p><a class="btn btn-warning" href="@Url.Action("Download","Home")">Zapisz jako &raquo;</a></p>
+        <h2>Pobierz swój plik wynikowy:</h2>
+        <div class="col-md-4">
+            <p><a class="btn btn-warning" href="">Pobierz plik w formacie BibTeX &raquo;</a></p>
+            <p><a class="btn btn-warning" href="@Url.Action("DownloadRIS", "Home")">Pobierz plik w formacie RIS &raquo;</a></p>
+
+        </div>
     </div>
 </div>

@@ -81,15 +81,23 @@ namespace TranslatorBIB_RIS.Controllers
             return View();
         }
 
-        [HttpGet, Route("Home/Download")]
-        public ActionResult Download()
+        [HttpGet, Route("Home/DownloadRIS")]
+        public ActionResult DownloadRIS()
         {
-            _risServices.parseToRis(_risServices._records);
-            
-            var path = System.IO.Path.GetTempPath() + "ris.ris";
+            if (_risServices._records.Count != 0)
+            {
+                _risServices.parseToRis(_risServices._records);
 
-            //string directoryPath = Server.MapPath(path);
-            return File(path, "application/octet-stream", "ris.ris");
+                var path = System.IO.Path.GetTempPath() + "ris.ris";
+
+                //string directoryPath = Server.MapPath(path);
+                return File(path, "application/octet-stream", "ris.ris");
+            }
+            else
+            {
+                return View("Index");
+            }
+            
         }
 
 
