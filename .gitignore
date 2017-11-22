@@ -255,4 +255,7 @@ ChatMvc/packages
 
 #Nuget packages folder
 packages/
-
+*.orig*
+TranslatorBiB_RIS/Controllers/HomeController.cs.orig
+/TranslatorBIB_RIS/Controllers/HomeController.cs.orig
+/TranslatorBIB_RIS/Controllers/HomeController.cs.orig
