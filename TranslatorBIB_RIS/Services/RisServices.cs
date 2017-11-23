@@ -43,7 +43,7 @@ namespace TranslatorBIB_RIS.Services
                 switch (risrecord.Tag.ToString())
                 {
                     case "TY":
-                        record.Type = risrecord.Value;
+                        record.Type = typeTranslator(risrecord);
                         break;
                     case "PB":
                         record.Publisher = risrecord.Value;
@@ -291,7 +291,7 @@ namespace TranslatorBIB_RIS.Services
 
                 if (record.Type != "" && record.Type != " ")
                 {
-                    risrecord = new RisRecord("TY", record.Type);
+                    risrecord = new RisRecord("TY", typeTranslator(record));
                     risRecords.Add(risrecord);
                 }
                 if (record.Publisher != "" && record.Publisher != " ")
@@ -416,6 +416,99 @@ namespace TranslatorBIB_RIS.Services
             {
                 Exception ex = new OutOfMemoryException();
             }
+        }
+
+        private string typeTranslator(RisRecord typerecord)
+        {
+            string type = "";
+
+            switch (typerecord.Value.ToString())
+            {
+                case "CONF":
+                    type = "Conference";
+                    break;
+                case "JOUR":
+                    type = "Article";
+                    break;
+                case "EJOUR":
+                    type = "Article";
+                    break;
+                case "JFULL":
+                    type = "Article";
+                    break;
+                case "MGZN":
+                    type = "Article";
+                    break;
+                case "NEWS":
+                    type = "Article";
+                    break;
+                case "BOOK":
+                    type = "Book";
+                    break;
+                case "EBOOK":
+                    type = "Book";
+                    break;
+                case "EDBOOK":
+                    type = "Booklet";
+                    break;
+                case "CHAP":
+                    type = "Inbook";
+                    break;
+                case "ECHAP":
+                    type = "Inbook";
+                    break;
+                case "CPAPER":
+                    type = "Proceedings";
+                    break;
+                case "RPRT":
+                    type = "Techreport";
+                    break;
+                case "UNPB":
+                    type = "Unpublished";
+                    break;
+
+                default:
+                    type = "Misc";
+                    break;
+            }
+
+            return type;
+        }
+
+        private string typeTranslator(Record typerecord)
+        {
+            string type = "";
+
+            switch (typerecord.Type.ToString())
+            {
+                case "Conference":
+                    type = "CONF";
+                    break;
+                case "Article":
+                    type = "JOUR";
+                    break;
+                case "Book":
+                    type = "BOOK";
+                    break;
+                case "Inbook":
+                    type = "CHAP";
+                    break;
+                case "Proceedings":
+                    type = "CPAPER";
+                    break;
+                case "Techreport":
+                    type = "RPRT";
+                    break;
+                case "Unpublished":
+                    type = "UNPB";
+                    break;
+
+                default:
+                    type = "STAND";
+                    break;
+            }
+
+            return type;
         }
 
 
