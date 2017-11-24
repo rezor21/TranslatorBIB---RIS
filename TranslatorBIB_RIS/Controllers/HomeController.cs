@@ -77,6 +77,7 @@ namespace TranslatorBIB_RIS.Controllers
                     }
                     else
                     {
+                        
                         //showFile(file);
                         
                         if (fileExt == "bib")
