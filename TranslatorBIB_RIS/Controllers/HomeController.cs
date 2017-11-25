@@ -84,7 +84,9 @@ namespace TranslatorBIB_RIS.Controllers
                         {
                             string bib = "@Pusto{},}";
                             bib = fileToString(file);
-                            return View(_bibServices.ParseBib(bib));
+                            _bibServices.ParseBib(bib);
+                            _bibServices.saveToRecords();
+                            //return View(_bibServices.ParseBib(bib));
                         }
                         if (fileExt == "ris")
                         {
@@ -124,6 +126,24 @@ namespace TranslatorBIB_RIS.Controllers
                 return View("Index");
             }
             
+        }
+        [HttpGet, Route("Home/DownloadBib")]
+        public ActionResult DownloadBib()
+        {
+            if (_recordServices.GetAll().Count != 0)
+            {
+                _bibServices.parseToBib(_recordServices.GetAll());
+
+                var path = System.IO.Path.GetTempPath() + "bib.bib";
+
+                //string directoryPath = Server.MapPath(path);
+                return File(path, "application/octet-stream", "bib.bib");
+            }
+            else
+            {
+                return View("Index");
+            }
+
         }
 
 
