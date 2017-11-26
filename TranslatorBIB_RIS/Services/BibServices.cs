@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using TranslatorBIB_RIS.Models;
@@ -27,8 +28,258 @@ namespace TranslatorBIB_RIS.Services
                 return _instance;
             }
         }
+        public void saveToRecords()
+        {
+           
+            foreach (var b in _BIBrecords)
+            {
+                Record rec = new Record();
+               
+                int month=1;
+                int year=1;
+                rec.Type = b.bibType;
+                for (int i = 0; i < b.bibTags.Count; i++)
+                {
+                                 
+                    if (b.bibTags[i].Contains("author"))
+                    {
+                        rec.Authors.Clear();
+                        string[] values = b.bibValues[i].Split(new[] { " and " }, StringSplitOptions.None);
+                       foreach(var v in values)
+                       {
+                            rec.Authors.Add(v);
+                       }
+                        
+                        
+                    }
+                    if (b.bibTags[i].Contains("publisher"))
+                    {
 
-        public List<BibContein> ParseBib(string bib)
+                        rec.Publisher = b.bibValues[i];
+
+                    }
+                    if (b.bibTags[i].Contains("volume"))
+                    {
+
+                        rec.Volume = Int32.Parse(b.bibValues[i]);
+
+                    }
+                    if (b.bibTags[i].Contains("address"))
+                    {
+
+                        rec.Adress = b.bibValues[i];
+
+                    }
+                    if (b.bibTags[i].Contains("editor"))
+                    {
+
+
+                        rec.Editors.Clear();
+                        string[] values = b.bibValues[i].Split(new[] { " and " }, StringSplitOptions.None);
+                        foreach (var v in values)
+                        {
+                            rec.Editors.Add(v);
+                        }
+
+                    }
+                    if (b.bibTags[i].Contains("title"))
+                    {
+
+                        rec.Title = b.bibValues[i];
+
+                    }
+                    if (b.bibTags[i].Contains("pages"))
+                    {
+                        if (b.bibValues[i].Contains("-"))
+                        {
+                            string[] values = b.bibValues[i].Split('-');
+                        
+                            rec.Start_page = Int32.Parse(values[0]);
+                            rec.End_page = Int32.Parse(values[1]);
+                        }
+                        else
+                        {
+                            rec.Start_page = Int32.Parse( b.bibValues[i]);
+                            rec.End_page = Int32.Parse(b.bibValues[i]);
+                        }
+                       
+
+                    }
+                    if (b.bibTags[i].Contains("month"))
+                    {
+                        switch(b.bibValues[i]){
+                            case "jan":
+                                month = 1;
+                                break;
+                            case "feb":
+                                month = 2;
+                                break;
+                            case "mar":
+                                month = 3;
+                                break;
+                            case "apr":
+                                month = 4;
+                                break;
+                            case "may":
+                                month = 5;
+                                break;
+                            case "jun":
+                                month = 6;
+                                break;
+                            case "jul":
+                                month = 7;
+                                break;
+                            case "aug":
+                                month = 8;
+                                break;
+                            case "sep":
+                                month = 9;
+                                break;
+                            case "oct":
+                                month = 10;
+                                break;
+                            case "nov":
+                                month = 11;
+                                break;
+                            case "dec":
+                                month = 12;
+                                break;
+                        }
+                        
+
+
+                    }
+                    if (b.bibTags[i].Contains("year"))
+                    {
+                        year = Int32.Parse(b.bibValues[i]); 
+
+                    }
+                }
+                DateTime data = new DateTime(year,month,1);
+                rec.Release_date = data;
+                _records.Add(rec);
+               
+               
+            }
+          
+            
+        }
+        public void parseToBib(List<Record> records)
+        {
+            string endofline = "\r\n";
+            string returnedBib = "% Encoding: UTF-8"+endofline;
+            foreach (var r in records)
+            {
+                returnedBib += "@" + r.Type + "{";
+                string keyString = "";
+                string authorString = "";
+                string editorString = "";
+                string pagesString = "";
+                string monthString = "";
+                for (int i = 0; i < r.Authors.Count; i++)
+                {
+                    if (i + 1 == r.Authors.Count)
+                    {
+                        string[] values = r.Authors[i].Split(' ');
+                        keyString += values[1] + r.Release_date.Year;
+                        authorString += r.Authors[i];
+                    }
+                    else
+                    {
+                        string[] values = r.Authors[i].Split(' ');
+                        keyString += values[1] + "&";
+                        authorString += r.Authors[i] + " and ";
+                    }
+                }
+                for (int i = 0; i < r.Editors.Count; i++)
+                {
+                    if (i + 1 == r.Editors.Count)                                         
+                        editorString += r.Editors[i];                  
+                    else                 
+                        editorString += r.Editors[i] + " and ";
+                    
+                }
+                if (r.Start_page != r.End_page)
+                {
+                    pagesString += r.Start_page + "-" + r.End_page;
+                }
+                else pagesString += r.Start_page;
+               
+                switch (r.Release_date.Month)
+                {
+                    case 1:
+                        monthString = "jan";
+                        break;
+                    case 2:                    
+                        monthString = "feb";
+                        break;
+                    case 3:
+                        monthString = "mar";
+                        break;
+                    case 4:
+                        monthString = "apr";
+                        break;
+                    case 5:
+                        monthString = "may";
+                        break;
+                    case 6:
+                        monthString = "jun";
+                        break;
+                    case 7:
+                        monthString = "jul";
+                        break;
+                    case 8:
+                        monthString = "aug";
+                        break;
+                    case 9:
+                        monthString = "sep";
+                        break;
+                    case 10:
+                        monthString = "oct";
+                        break;
+                    case 11:
+                        monthString = "nov";
+                        break;
+                    case 12:
+                        monthString = "dec";
+                        break;
+                }
+
+
+
+                
+                returnedBib += keyString + ",";
+                returnedBib += endofline;
+
+                returnedBib += "author = {" + authorString + "},"+ endofline;
+                returnedBib += "title = {" + r.Title + "}," + endofline;
+                returnedBib += "year = {" + r.Release_date.Year + "}," + endofline;
+                returnedBib += "editor = {" + editorString + "}," + endofline;
+                returnedBib += "volume = {" + r.Volume + "}," + endofline;
+                returnedBib += "pages = {" + pagesString + "}," + endofline;
+                returnedBib += "address = {" + r.Adress + "}," + endofline;
+                returnedBib += "month = {" + monthString + "}," + endofline;
+                returnedBib += "publisher = {" + r.Publisher + "}," + endofline+"}"+endofline;
+                
+            }
+            returnedBib += "@Comment{ jabref - meta: databaseType: bibtex; }";
+            saveAsBibFile(returnedBib);
+        }
+        public void saveAsBibFile(string text)
+        {
+
+            var path = Path.GetTempPath() + "bib.bib";
+
+            try
+            {
+                System.IO.File.WriteAllText(@path, text);
+            }
+            catch
+            {
+                Exception ex = new OutOfMemoryException();
+            }
+        }
+        public void ParseBib(string bib)
         {
             List<BibContein> bibModel = new List<BibContein>();
 
@@ -109,7 +360,7 @@ namespace TranslatorBIB_RIS.Services
 
 
             }
-            return bibModel;
+            _BIBrecords= bibModel;
         }
     }
 }
