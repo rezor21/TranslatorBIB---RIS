@@ -281,6 +281,8 @@ namespace TranslatorBIB_RIS.Services
         }
         public void ParseBib(string bib)
         {
+            _records.Clear();
+           
             List<BibContein> bibModel = new List<BibContein>();
 
             for (int i = 0; i < bib.Length; i++)
