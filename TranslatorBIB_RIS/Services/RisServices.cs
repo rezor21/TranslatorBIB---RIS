@@ -113,7 +113,16 @@ namespace TranslatorBIB_RIS.Services
                 if (CheckSeparator(ris, i))
                 {
                     string tag = getTag(ris, i);
-                    i = i + 3;
+                    if (i + 3 < ris.Length)
+                    {
+                        i = i + 3;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
                     _RISrecords.Add(new RisRecord(tag, getValue(ris, i)));
                 }
             }
@@ -232,11 +241,16 @@ namespace TranslatorBIB_RIS.Services
         public bool CheckSeparator(string ris, int i)
         {
             String separator = "";
-            separator += ris[i];
-            i++;
-            separator += ris[i];
-            i++;
-            separator += ris[i];
+            try
+            {
+                separator += ris[i];
+                i++;
+                separator += ris[i];
+                i++;
+                separator += ris[i];
+
+            }
+            catch { }
             if (separator == " - ")
             {
 
@@ -248,8 +262,8 @@ namespace TranslatorBIB_RIS.Services
             }
         }
 
-        
-        
+
+
 
 
 
@@ -285,7 +299,8 @@ namespace TranslatorBIB_RIS.Services
             List<RisRecord> risRecords = new List<RisRecord>();
             foreach (var record in recordsList)
             {
-
+                string month = "";
+                string day = "";
                 int x = 0;
                 RisRecord risrecord;
 
@@ -304,20 +319,48 @@ namespace TranslatorBIB_RIS.Services
                     risrecord = new RisRecord("TI", record.Title);
                     risRecords.Add(risrecord);
                 }
-                if (record.Release_date.Month == 0 && record.Release_date.Day == 0 && record.Release_date.Year == 0 )
+
+
+                if (record.Release_date.Month == 0 && record.Release_date.Day == 0 && record.Release_date.Year == 0)
                 {
                 }
                 else
                 {
                     if (record.Release_date.Month != 0 && record.Release_date.Day != 0 && record.Release_date.Day != 1)
                     {
-                        risrecord = new RisRecord("PY", record.Release_date.Year.ToString() + "/" + record.Release_date.Month.ToString() + "/" + record.Release_date.Day.ToString());
+                        if (record.Release_date.Month < 10)
+                        {
+                            month = "0" + record.Release_date.Month.ToString();
+
+                            if (record.Release_date.Day < 10)
+                            {
+                                day = "0" + record.Release_date.Day.ToString();
+                            }
+                            else
+                            {
+                                day = record.Release_date.Day.ToString();
+                            }
+
+                        }
+                        else
+                        {
+                            month = record.Release_date.Month.ToString();
+                        }
+                        risrecord = new RisRecord("PY", record.Release_date.Year.ToString() + "/" + month + "/" + day);
                     }
                     else
                     {
                         if (record.Release_date.Month != 0)
                         {
-                            risrecord = new RisRecord("PY", record.Release_date.Year.ToString() + "/" + record.Release_date.Month.ToString());
+                            if (record.Release_date.Month < 10)
+                            {
+                                month = "0" + record.Release_date.Month.ToString();
+                            }
+                            else
+                            {
+                                month = record.Release_date.Month.ToString();
+                            }
+                            risrecord = new RisRecord("PY", record.Release_date.Year.ToString() + "/" + month);
                         }
                         else
                         {
@@ -371,7 +414,7 @@ namespace TranslatorBIB_RIS.Services
                 }
                 if (record.Adress != "" && record.Adress != " ")
                 {
-                   risrecord = new RisRecord("CY", record.Adress);
+                    risrecord = new RisRecord("CY", record.Adress);
                     risRecords.Add(risrecord);
                 }
 
