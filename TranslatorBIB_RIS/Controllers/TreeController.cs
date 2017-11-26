@@ -34,7 +34,7 @@ namespace TranslatorBIB_RIS.Controllers
         {
             List<TreeTag> selectedRecords = model.Where(a => a.IsChecked).ToList();
 
-            return View("~/Views/Home/Angular.cshtml");
+            return View("~/Views/Home/Index.cshtml");
         }
     }
 }
