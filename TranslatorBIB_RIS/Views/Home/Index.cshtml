@@ -4,6 +4,7 @@
     
 }
 @model List<TranslatorBIB_RIS.Models.BibContein >
+    
 <div class="jumbotron">
     <h1>Szybka konwersja</h1>
     <p class="lead">Wybierz plik w formacie BibTeX, a otrzymasz plik w formacie RIS i na odwrót</p>
@@ -53,28 +54,17 @@
 
         }
        
+        
 
-
-
+        
         <h2>Zawartość</h2>
         <p>Tu tabelkę trzeba z danymi z pliku zrobić</p>
 
     </div>
     <div class="col-md-4">
         <h2>Wybierz opcje filtrowania</h2>
-        <p>checkbox'y w takim stylu</p>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-info">
-                <input type="checkbox"> Opcja 1
-            </label>
-            <label class="btn btn-info">
-                <input type="checkbox"> Opcja 2
-            </label>
-            <label class="btn btn-info">
-                <input type="checkbox"> Opcja 3
-            </label>
-        </div>
-        <p><a class="btn btn-primary" href="">Filtruj</a></p>
+        <p><a class="btn btn-primary" href="@Url.Action("Index", "Tree")">Filtruj</a></p>
+       
     </div>
     <div class="col-md-4">
         <h2>Pobierz swój plik wynikowy:</h2>

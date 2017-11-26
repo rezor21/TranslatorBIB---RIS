@@ -7,6 +7,7 @@ namespace TranslatorBIB_RIS.Models
 {
     public class Record
     {
+        private bool isChecked = true;
         public string Type { get; set; }
         public List<string> Authors { get; set; }
         public string Title { get; set; }
@@ -17,8 +18,17 @@ namespace TranslatorBIB_RIS.Models
         public int End_page { get; set; }
         public string Adress { get; set; }
         public string Publisher { get; set; }
+        public bool IsChecked {
+            get
+            {
+                return isChecked;
+            }
+            set
+            {
+                isChecked = value;
+            }
+        }
 
-       
 
         public Record()
         {

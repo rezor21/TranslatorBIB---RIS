@@ -25,7 +25,12 @@ namespace TranslatorBIB_RIS
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/tree.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/tree").Include(
+                
+                      "~/Scripts/tree.js"));
         }
     }
 }

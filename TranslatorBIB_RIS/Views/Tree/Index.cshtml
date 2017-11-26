@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Tree";
+}
+@model List<TranslatorBIB_RIS.Models.TreeTag>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/tree")
+
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Tagi do filtrowania</div>
+    <div id="frm-author" class="panel-body">
+        @using (Html.BeginForm())
+        {
+
+            <div class="tree">
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+
+                    <ul>
+                        <li>
+                            <a href="#">
+                               
+
+                                <label for=@i>
+                                    
+                                    @for (int x = 0; x < Model[i].Tag.Count(); x++)
+                                    {
+
+                                        <strong> @Html.DisplayFor(model => model[i].Tag[x])</strong>
+                                    }
+                                    
+
+                                </label>
+                            </a>
+                            <ul>
+                                @for (int j = 0; j < Model[i].Value.Count(); j++)
+                                {
+                                    int k = 1 + j;
+                                    @Html.HiddenFor(model => model[i].Value[j])
+   
+                                        <li>
+                                            <a href="#">
+                                                @Html.CheckBox(Model[i].Value[j], false, new { @class = "tree-checkbox node-item", @iid = i + "" + j })
+
+                                                @Html.DisplayFor(model => model[i].Value[j])
+                                                </a>
+                                        </li>
+                                            
+                                }
+
+                            </ul>
+                        </li>
+                    </ul>
+                }
+
+            </div>
+            <div class="form-group">
+                <div class="col-lg-9"></div>
+                <div class="col-lg-3">
+                    <button class="btn btn-success" id="btnSubmit" type="submit">
+                        Filtruj
+                    </button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
