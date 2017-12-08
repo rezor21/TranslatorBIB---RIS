@@ -3,9 +3,8 @@
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
-    <title>Hello AngularJS</title>
+    <title>Podgląd</title>
 
-    <script src="~/Scripts/angular.js"></script>
 
 
     <style type="text/css">
@@ -25,52 +24,53 @@
 
     <div class="container" ng-controller="tableController">
         <div class="row">
-            <div class="col-sm-8 center-block">
-                <h1 class="text-center">Tabela zawiera {{records.length}} rekordy</h1>
+            <div class="col-sm-8 center-block"  ng-if="records!=null && records.length>0">
+                <h1 class="text-center"   ng-if="records!=null && records.length>1">Tabela zawiera {{records.length}} rekordy</h1>
+                <h1 class="text-center"  ng-if="records!=null && records.length==1">Tabela zawiera {{records.length}} rekord</h1>
                 <br>
                 <span class="input-group-addon">Szukaj: </span>
                 <input type="text" class="form-control" placeholder="Jakiej słowa szukasz?" ng-model="search">
             </div>
 
-            <br>
-
-            <div class="table-responsive ">
+            </br>
+            <div class="col-sm-8 center-block">
                 Sortuj według:
                 <select data-ng-model="sortBy">
-                    <option selected>id</option>
-                    <option value="Title">Tytułu</option>
-                    <option value="Start_page">Strony startowej</option>
-                    <option value="End_page">Strony końcowej</option>
-                    <option value="Authors">Autora</option>
+
+                    <option ng-repeat="head in headlines" value={{head.Value}}>{{head.Title}}</option>
+
                 </select>
+            </div>
+            <div class="table-responsive ">
+
 
                 <table class="table table-hover table-condensed table-inverse table-striped warning">
                     <thead class="thead-inverse">
 
                         <tr class="info">
-                            <th ng-repeat="naglowek in ['typ','autor', 'tytuł', 'strona początkowa', 'strona końcowa','data wydania','edytorzy', 'wolumin/część', 'miejsce wydania', 'Opublikowane przez']">
-                                {{naglowek}}
+                            <th ng-repeat="head in headlines">
+                                {{head.Title}}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <tr ng-repeat="record in records | filter : search | orderBy:sortBy">
-                            <td>{{record.Type}}</td>
-                            <td>{{record.Authors}}</td>
-                            <td>{{record.Title}}</td>
-                            <td>{{record.Start_page}}</td>
-                            <td>{{record.End_page}}</td>
-                            <td>{{record.Release_date}}</td>
-                            <td>{{record.Editors}}</td>
-                            <td>{{record.Volume}}</td>
-                            <td>{{record.Adress}}</td>
-                            <td>{{record.Publisher}}</td>
+                            <td ng-if="record.Type!=null">{{record.Type}}</td>
+                            <td ng-if="record.Authors!=null && record.Authors.length>0"><span ng-repeat="author in record.Authors">{{author}}</span></td>
+                            <td ng-if="record.Title!=null">{{record.Title}}</td>
+                            <td ng-if="record.BookTitle!=null">{{record.BookTitle}}</td>
+                            <td ng-if="record.Start_page!=null">{{record.Start_page}}</td>
+                            <td ng-if="record.End_page!=null">{{record.End_page}}</td>
+                            <td ng-if="record.Release_date!=null">{{ getDate(record.Release_date) |  date:"MM/yyyy" }}</td>
+                            <td ng-if="record.Editors!=null && record.Editors.length>0"><span ng-repeat="editor in record.Editors">{{editor}}, </span></td>
+                            <td ng-if="record.Edition!=null">{{record.Edition}}</td>
+                            <td ng-if="record.Volume!=null">{{record.Volume}}</td>
+                            <td ng-if="record.Adress!=null">{{record.Adress}}</td>
+                            <td ng-if="record.Publisher!=null">{{record.Publisher}}</td>
 
 
-                            <td>
-                                <button class="btn btn-info" ng-click="updateOneBook(book.id)">Aktualizuj</button>
-                            </td>
+
                             <td>
                                 <button class="btn btn-danger" ng-click="deleteOneBook(book.id)">Usuń</button>
                             </td>
@@ -82,86 +82,12 @@
                 </table>
 
             </div>
-            <div class="addbook">
-                <form name="dodaj">
-                    <p class="">Podaj dane, aby zaktualizować (następnie kliknij przycisk "aktualizuj" przy danym rekordzie)<br> lub dodać rekord (i kliknij przycisk "dodaj" poniżej):</p>
-                    <input type="search" placeholder="tytuł" ng-model="Title" /><br>
-                    <input type="search" placeholder="strona początkowa" ng-model="Start_page" /><br>
-                    <input type="search" placeholder="strona końcowa" ng-model="End_page" /><br>
-                    <input type="search" placeholder="autor" ng-model="Authors" /><br>
-                </form>
-                <button class="btn btn-success" ng-click="addOneRecord()">Dodaj</button>
-            </div>
+           
         </div>
     </div>
 
 
 
 
-    <script>
-        var aplikacja = angular.module('aplikacja', []);
 
-
-        aplikacja.controller('tableController', ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
-
-            $http.get("/api/records/")
-                .then(function (response) {
-                    $scope.records = response.data;
-                })
-
-            $scope.deleteOneBook = function (id) {
-                var url = "/api//records/" + id;
-                $http.delete(url)
-                    .then(function (response) {
-                        $scope.del = response.data;
-                    })
-
-                window.location = location.href;
-            }
-
-            $scope.addOneRecord = function () {
-                var url = "/api/records/";
-                var param = JSON.stringify({
-                    id: 0,
-                    Authors: $scope.Authors,
-                    Title: $scope.Title,
-                    Start_page: $scope.Start_page,
-                    End_page: $scope.End_page
-
-                })
-                $http.post(url, param)
-                    .then(function (response) {
-                        $scope.dodaj = response.data;
-                    })
-
-                window.location = location.href;
-            }
-
-            $scope.updateOneBook = function (id) {
-                var url = "/api/records/" + id;
-                var param = JSON.stringify({
-                    id: id,
-                    title: $scope.title,
-                    pages: $scope.pages,
-                    Authors: $scope.Authors
-                })
-                $http.put(url, param)
-                    .then(function (response) {
-                        $scope.aktu = response.data;
-                    })
-
-                window.location = location.href;
-
-
-            }
-
-
-        }]);
-
-
-
-
-
-
-    </script>
 </body>

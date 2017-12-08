@@ -18,15 +18,27 @@ namespace TranslatorBIB_RIS.Controllers
             _recordsServices = RecordsServices.Instance;
         }
 
+        [HttpGet, Route("api/records/headlines/")]
+        public IHttpActionResult GetHeadline()
+        {
+           List<HeadLine> headlines = _recordsServices.GetHeadLines();
+
+            return Ok(headlines);
+        }
+
         // GET records
         public IHttpActionResult GetAll()
         {
 
             List<Record> records = _recordsServices.GetAll();
+            if (records.Count > 0)
+            {
+                _recordsServices.SetHeadLines();
+            }
             return Ok(records);
         }
 
-        [HttpGet, Route("records/author/{authors}")]
+        [HttpGet, Route("api/records/author/{authors}")]
         public IHttpActionResult GetAuthor(string authors)
         {
             List<string> authorsList = new List<string>();
@@ -40,7 +52,7 @@ namespace TranslatorBIB_RIS.Controllers
             return Ok(records);
         }
 
-        [HttpGet, Route("records/title/{title}")]
+        [HttpGet, Route("api/records/title/{title}")]
         public IHttpActionResult GetTitle(string title)
         {
 

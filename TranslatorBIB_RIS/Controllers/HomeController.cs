@@ -86,12 +86,14 @@ namespace TranslatorBIB_RIS.Controllers
                             bib = fileToString(file);
                             _bibServices.ParseBib(bib);
                             _bibServices.saveToRecords();
+                            
                             //return View(_bibServices.ParseBib(bib));
                         }
                         if (fileExt == "ris")
                         {
                             string ris = fileToString(file);
                             _risServices.parseFromRis(ris);
+                           
                         }
 
                         ViewBag.Message = "File uploaded successfully ";

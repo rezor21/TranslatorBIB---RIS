@@ -45,6 +45,12 @@ namespace TranslatorBIB_RIS.Services
                     case "TY":
                         record.Type = typeTranslator(risrecord);
                         break;
+                    case "BT":
+                        record.BookTitle = risrecord.Value;
+                        break;
+                    case "ET":
+                        record.Edition = risrecord.Value;
+                        break;
                     case "PB":
                         record.Publisher = risrecord.Value;
                         break;
@@ -89,6 +95,9 @@ namespace TranslatorBIB_RIS.Services
                         record.Editors.Add(risrecord.Value);
                         break;
                     case "CY":
+                        record.Adress = risrecord.Value;
+                        break;
+                    case "PP":
                         record.Adress = risrecord.Value;
                         break;
                     case "ER":
@@ -312,6 +321,11 @@ namespace TranslatorBIB_RIS.Services
                 if (record.Publisher != "" && record.Publisher != " ")
                 {
                     risrecord = new RisRecord("PB", record.Publisher);
+                    risRecords.Add(risrecord);
+                }
+                if (record.BookTitle != "" && record.BookTitle != " ")
+                {
+                    risrecord = new RisRecord("BT", record.BookTitle);
                     risRecords.Add(risrecord);
                 }
                 if (record.Title != "" && record.Title != " ")

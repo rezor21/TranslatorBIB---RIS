@@ -161,6 +161,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BibContein.cs" />
+    <Compile Include="Models\HeadLine.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\RisRecord.cs" />
     <Compile Include="Models\TreeTag.cs" />
@@ -185,6 +186,7 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\aplikacja.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />

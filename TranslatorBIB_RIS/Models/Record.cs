@@ -11,8 +11,10 @@ namespace TranslatorBIB_RIS.Models
         public string Type { get; set; }
         public List<string> Authors { get; set; }
         public string Title { get; set; }
+        public string BookTitle { get; set; }
         public DateTime Release_date { get; set; }
         public List<string> Editors { get; set; }
+        public string Edition { get; set; }
         public int Volume { get; set; }
         public int Start_page { get; set; }
         public int End_page { get; set; }
@@ -28,6 +30,7 @@ namespace TranslatorBIB_RIS.Models
                 isChecked = value;
             }
         }
+
 
 
         public Record()

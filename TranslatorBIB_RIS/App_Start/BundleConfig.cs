@@ -10,6 +10,10 @@ namespace TranslatorBIB_RIS
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                        "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                       "~/Scripts/angular.js",
+                       "~/Scripts/aplikacja.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/popper").Include(
                       "~/Scripts/umd/popper.min.js"
                 ));
