@@ -61,4 +61,84 @@
 
 </div>
 
-    
+    <div>
+    <div ng-app="aplikacja">
+
+        <div class="container" ng-controller="tableController">
+            
+        </div>
+
+    </div>
+    </div>
+
+<div>
+    <div ng-app="aplikacja">
+
+        <div class="container" ng-controller="tableController">
+
+
+            <div class="row">
+                <div class="col-sm-8 center-block" ng-if="records!=null && records.length>0">
+                    <h1 class="text-center" ng-if="records!=null && records.length>1">Tabela zawiera {{records.length}} rekordy</h1>
+                    <h1 class="text-center" ng-if="records!=null && records.length==1">Tabela zawiera {{records.length}} rekord</h1>
+                    <br>
+                    <span class="input-group-addon">Szukaj: </span>
+                    <input type="text" class="form-control" placeholder="Jakiej słowa szukasz?" ng-model="search">
+                </div>
+
+                </br>
+                <div class="col-sm-8 center-block">
+                    Sortuj według:
+                    <select data-ng-model="sortBy">
+
+                        <option ng-repeat="head in headlines" value={{head.Value}}>{{head.Title}}</option>
+
+                    </select>
+                </div>
+                <div class="table-responsive ">
+
+
+                    <table class="table table-hover table-condensed table-inverse table-striped warning">
+                        <thead class="thead-inverse">
+
+                            <tr class="info">
+                                <th ng-repeat="head in headlines">
+                                    {{head.Title}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr ng-repeat="record in records | filter : search | orderBy:sortBy">
+                                <td ng-if="record.Type!=null">{{record.Type}}</td>
+                                <td ng-if="record.Authors!=null && record.Authors.length>0"><span ng-repeat="author in record.Authors">{{author}}</span></td>
+                                <td ng-if="record.Title!=null">{{record.Title}}</td>
+                                <td ng-if="record.BookTitle!=null">{{record.BookTitle}}</td>
+                                <td ng-if="record.Start_page!=null">{{record.Start_page}}</td>
+                                <td ng-if="record.End_page!=null">{{record.End_page}}</td>
+                                <td ng-if="record.Release_date!=null">{{ getDate(record.Release_date) |  date:"MM/yyyy" }}</td>
+                                <td ng-if="record.Editors!=null && record.Editors.length>0"><span ng-repeat="editor in record.Editors">{{editor}}, </span></td>
+                                <td ng-if="record.Edition!=null">{{record.Edition}}</td>
+                                <td ng-if="record.Volume!=null">{{record.Volume}}</td>
+                                <td ng-if="record.Adress!=null">{{record.Adress}}</td>
+                                <td ng-if="record.Publisher!=null">{{record.Publisher}}</td>
+
+
+
+                                <td>
+                                    <button class="btn btn-danger" ng-click="deleteOneBook(book.id)">Usuń</button>
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
