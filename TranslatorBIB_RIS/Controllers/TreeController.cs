@@ -10,35 +10,41 @@ namespace TranslatorBIB_RIS.Controllers
     public class TreeController : Controller
     {
         private static RecordsServices _recordServices;
-        private List<string> authors;
-        private List<string> tittle;
+        private static FiltrServices _filtrServices;
+      
+       
+        private List<AuthorFiltr> authors;
+        private List<TittleFiltr> tittle;
+      
         public TreeController()
         {
             _recordServices = RecordsServices.Instance;
+            _filtrServices = FiltrServices.Instance;
+            if (_filtrServices.isIntalizeList() == false)
+            {
+                 List<RecordFiltr> recordsFiltr;
+                 recordsFiltr = _recordServices.GetAll().Select(i => new RecordFiltr(i)).ToList();
+                _filtrServices.setRecordsFiltr(recordsFiltr);
+                
+            }
+                 
         }
         [HttpGet]
         public ActionResult Index()
         {
             List<TreeTag> model = new List<TreeTag>();
-            authors = _recordServices.GetAllAuthors();
-            tittle = _recordServices.GetAllTittle();
-            List<bool> authorsCheck = new List<bool>();
-            for(int i = 0; i < authors.Count; i++)
-            {
-                authorsCheck.Add(false);
-            }
-            List<bool> tittleCheck = new List<bool>();
-            for (int i = 0; i < tittle.Count; i++)
-            {
-                tittleCheck.Add(false);
-            }
+            authors = _filtrServices.GetAllAuthorsFiltr();
+            tittle = _filtrServices.GetAllTittleFiltr();
+          
+            
+            
 
             TreeTag firstrecord = new TreeTag
             {
                 Tag = "Autorzy",
-                Value = authors,
-                checkValue=authorsCheck
-                
+                Value = authors.Select(c => c.autor).ToList(),
+                checkValue = authors.Select(c => c.check).ToList()
+
 
             };
             firstrecord.IsChecked = true;
@@ -46,8 +52,8 @@ namespace TranslatorBIB_RIS.Controllers
             TreeTag secondrecord = new TreeTag
             {
                 Tag = "Tytuły",
-                Value = tittle,
-                checkValue = tittleCheck
+                Value = tittle.Select(c => c.tittle).ToList(),
+                checkValue = tittle.Select(c => c.check).ToList(),
             };
             model.Add(firstrecord);
             model.Add(secondrecord);
@@ -60,8 +66,9 @@ namespace TranslatorBIB_RIS.Controllers
             List<TreeTag> selectedRecords = model;
             List<Record> records = new List<Record>();          
             List<string> title = new List<string>();
+            _filtrServices.clearMarks();
 
-            foreach(var t in selectedRecords)
+            foreach (var t in selectedRecords)
             {
                 if (t.Tag == "Autorzy")
                 {
@@ -70,8 +77,9 @@ namespace TranslatorBIB_RIS.Controllers
                     {
                         if (t.checkValue[i])
                         {
-                          
-                            records.AddRange(_recordServices.GetAllAuthorRecords(t.Value[i]));
+                            _filtrServices.markAuthor(t.Value[i]);
+                           
+                            records.AddRange(_filtrServices.GetAllAuthorRecords(t.Value[i]));
                         }
                     }
                     
@@ -85,6 +93,7 @@ namespace TranslatorBIB_RIS.Controllers
                         {
                             addAll = false;
                             title.Add(t.Value[i]);
+                            _filtrServices.markTittle(t.Value[i]);
                         }
                            
                     }
