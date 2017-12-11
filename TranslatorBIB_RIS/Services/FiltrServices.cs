@@ -60,6 +60,15 @@ namespace TranslatorBIB_RIS.Services
             }
             return foundRecords;
         }
+        public List<Record> GetAllAuthorRecords()
+        {
+            List<Record> records=new List<Record>();
+            foreach(var r in _recordsFiltr)
+            {
+                records.Add(r.record);
+            }
+            return records;
+        }
         public List<AuthorFiltr> GetAllAuthorsFiltr()
         {
             List<String> authors = new List<String>();

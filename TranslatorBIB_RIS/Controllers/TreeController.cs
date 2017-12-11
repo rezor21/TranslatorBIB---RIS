@@ -74,18 +74,27 @@ namespace TranslatorBIB_RIS.Controllers
                 if (t.Tag == "Autorzy")
                 {
                     List<string> value=new List<string>();
+                    bool addAll = true;
                     for(int i = 0; i < t.checkValue.Count; i++)
                     {
                         if (t.checkValue[i])
                         {
+                            addAll = false;
                             _filtrServices.markAuthor(t.Value[i]);
-                           
+
                             records.AddRange(_filtrServices.GetAllAuthorRecords(t.Value[i]));
                         }
+                       
                     }
-                    
-                  
-                }else if (t.Tag == "Tytuły")
+                    if (addAll == true)
+                    {
+                        records.AddRange(_filtrServices.GetAllAuthorRecords());
+
+                    }
+
+
+                }
+                else if (t.Tag == "Tytuły")
                 {
                     bool addAll = true;
                     for(int i = 0; i < t.checkValue.Count; i++)
