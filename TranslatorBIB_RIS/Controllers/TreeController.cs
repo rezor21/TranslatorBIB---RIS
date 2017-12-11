@@ -20,13 +20,14 @@ namespace TranslatorBIB_RIS.Controllers
         {
             _recordServices = RecordsServices.Instance;
             _filtrServices = FiltrServices.Instance;
-            if (_filtrServices.isIntalizeList() == false)
-            {
-                 List<RecordFiltr> recordsFiltr;
-                 recordsFiltr = _recordServices.GetAll().Select(i => new RecordFiltr(i)).ToList();
-                _filtrServices.setRecordsFiltr(recordsFiltr);
+            //if (_filtrServices.isIntalizeList() == false)
+            //{
+            //     List<RecordFiltr> recordsFiltr;
+            //     recordsFiltr = _recordServices.GetAll().Select(i => new RecordFiltr(i)).ToList();
+            //    _filtrServices.setRecordsFiltr(recordsFiltr);
                 
-            }
+            //}
+           
                  
         }
         [HttpGet]
@@ -67,7 +68,7 @@ namespace TranslatorBIB_RIS.Controllers
             List<Record> records = new List<Record>();          
             List<string> title = new List<string>();
             _filtrServices.clearMarks();
-
+            _filtrServices.clearRecordsMark();
             foreach (var t in selectedRecords)
             {
                 if (t.Tag == "Autorzy")
@@ -110,6 +111,7 @@ namespace TranslatorBIB_RIS.Controllers
                 if(title.Contains(r.Title))
                     _recordServices.AddNewRecord(r);
             }
+            
            
             
             return View("~/Views/Home/Index.cshtml");

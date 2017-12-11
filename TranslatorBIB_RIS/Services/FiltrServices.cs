@@ -9,7 +9,7 @@ namespace TranslatorBIB_RIS.Services
     public class FiltrServices
     {
         private FiltrServices _filtrServices;
-        private List<RecordFiltr> _recordsFiltr;
+        private List<RecordFiltr> _recordsFiltr=new List<RecordFiltr>();
         private static FiltrServices _instance;
        
 
@@ -27,6 +27,7 @@ namespace TranslatorBIB_RIS.Services
         }
         public void setRecordsFiltr(List<RecordFiltr> r)
         {
+            this._recordsFiltr.Clear();
             this._recordsFiltr = r;
         }
         public bool isIntalizeList()
@@ -35,6 +36,13 @@ namespace TranslatorBIB_RIS.Services
                 return false;
             else return true;
         }
+        public void clearRecordsMark()
+        {
+            foreach(var r in _recordsFiltr)
+            {
+                r.IsChecked = false;
+            }
+        }
         public List<Record> GetAllAuthorRecords(string author)
         {
             List<Record> foundRecords = new List<Record>();
@@ -42,8 +50,12 @@ namespace TranslatorBIB_RIS.Services
             {
                 for (int i = 0; i < r.record.Authors.Count; i++)
                 {
-                    if (r.record.Authors[i].Contains(author))
+                    if (r.record.Authors[i].Contains(author)&&r.IsChecked==false)
+                    {
+                        r.IsChecked = true;
                         foundRecords.Add(r);
+                    }
+                        
                 }
             }
             return foundRecords;

@@ -13,6 +13,7 @@ namespace TranslatorBIB_RIS.Services
         private List<BibContein> _BIBrecords;
         public List<Record> _records;
         private static RecordsServices _recordServices;
+        private FiltrServices _filtrServices;
 
         public static BibServices Instance
         {
@@ -24,6 +25,7 @@ namespace TranslatorBIB_RIS.Services
                     _instance._BIBrecords = new List<BibContein>();
                     _recordServices = RecordsServices.Instance;
                     _instance._records = _recordServices.GetAll();
+                   
                 }
                 return _instance;
             }
@@ -161,8 +163,12 @@ namespace TranslatorBIB_RIS.Services
                
                
             }
-          
-            
+            _filtrServices = FiltrServices.Instance;
+            List<RecordFiltr> recordsFiltr;
+            recordsFiltr = _recordServices.GetAll().Select(i => new RecordFiltr(i)).ToList();
+            _filtrServices.setRecordsFiltr(recordsFiltr);
+
+
         }
         public void parseToBib(List<Record> records)
         {

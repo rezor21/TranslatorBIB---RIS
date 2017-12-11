@@ -22,7 +22,7 @@ namespace TranslatorBIB_RIS.Models
             this.Authors = r.Authors;         
             this.Editors = r.Editors;
             this.End_page = r.End_page;
-            this.IsChecked = r.IsChecked;
+            this.IsChecked = false;
             this.Publisher = r.Publisher;
             this.Release_date = r.Release_date;
             this.Release_date = r.Release_date;

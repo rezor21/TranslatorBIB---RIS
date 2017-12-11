@@ -13,6 +13,7 @@ namespace TranslatorBIB_RIS.Services
         private static RecordsServices _recordServices;
         private List<RisRecord> _RISrecords;
         private List<Record> _records;
+        private FiltrServices _filtrServices;
 
         public static RisServices Instance
         {
@@ -102,8 +103,10 @@ namespace TranslatorBIB_RIS.Services
                 }
 
             }
-            
-            
+            _filtrServices = FiltrServices.Instance;
+            List<RecordFiltr> recordsFiltr;
+            recordsFiltr = _recordServices.GetAll().Select(i => new RecordFiltr(i)).ToList();
+            _filtrServices.setRecordsFiltr(recordsFiltr);
         }
 
         public void readRis(string ris)
