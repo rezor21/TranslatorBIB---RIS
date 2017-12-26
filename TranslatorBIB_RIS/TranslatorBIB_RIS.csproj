@@ -167,6 +167,8 @@
     <Compile Include="Models\RisRecord.cs" />
     <Compile Include="Models\TittleFiltr.cs" />
     <Compile Include="Models\TreeTag.cs" />
+    <Compile Include="Models\TreeTagCheckValue.cs" />
+    <Compile Include="Models\TreeTagPages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BibServices.cs" />
     <Compile Include="Services\FiltrServices.cs" />
