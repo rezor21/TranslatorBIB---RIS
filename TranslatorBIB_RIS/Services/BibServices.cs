@@ -70,6 +70,12 @@ namespace TranslatorBIB_RIS.Services
                         rec.Adress = b.bibValues[i];
 
                     }
+                    if (b.bibTags[i].Contains("edition"))
+                    {
+                       
+                        rec.Edition = b.bibValues[i];
+
+                    }
                     if (b.bibTags[i].Contains("editor"))
                     {
 
@@ -82,10 +88,16 @@ namespace TranslatorBIB_RIS.Services
                         }
 
                     }
-                    if (b.bibTags[i].Contains("title"))
+                    if (b.bibTags[i].Contains("title")&& !b.bibTags[i].Contains("booktitle"))
                     {
 
                         rec.Title = b.bibValues[i];
+
+                    }
+                    if (b.bibTags[i].Contains("booktitle"))
+                    {
+
+                        rec.BookTitle = b.bibValues[i];
 
                     }
                     if (b.bibTags[i].Contains("pages"))
@@ -251,15 +263,17 @@ namespace TranslatorBIB_RIS.Services
                 returnedBib += keyString + ",";
                 returnedBib += endofline;
 
-                returnedBib += "author = {" + authorString + "},"+ endofline;
-                returnedBib += "title = {" + r.Title + "}," + endofline;
-                returnedBib += "year = {" + r.Release_date.Year + "}," + endofline;
-                returnedBib += "editor = {" + editorString + "}," + endofline;
-                returnedBib += "volume = {" + r.Volume + "}," + endofline;
-                returnedBib += "pages = {" + pagesString + "}," + endofline;
-                returnedBib += "address = {" + r.Adress + "}," + endofline;
-                returnedBib += "month = {" + monthString + "}," + endofline;
-                returnedBib += "publisher = {" + r.Publisher + "}," + endofline+"}"+endofline;
+                returnedBib += "author = {" + authorString + " },"+ endofline;
+                returnedBib += "title = {" + r.Title + " }," + endofline;
+                returnedBib += "booktitle = {" + r.BookTitle + " }," + endofline;
+                returnedBib += "edition = {" + r.Edition + " }," + endofline;
+                returnedBib += "year = {" + r.Release_date.Year + " }," + endofline;
+                returnedBib += "editor = {" + editorString + " }," + endofline;
+                returnedBib += "volume = {" + r.Volume + " }," + endofline;
+                returnedBib += "pages = {" + pagesString + " }," + endofline;
+                returnedBib += "address = {" + r.Adress + " }," + endofline;
+                returnedBib += "month = {" + monthString + " }," + endofline;
+                returnedBib += "publisher = {" + r.Publisher + " }," + endofline+"}"+endofline;
                 
             }
             returnedBib += "@Comment{ jabref - meta: databaseType: bibtex; }";
