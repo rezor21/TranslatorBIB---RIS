@@ -128,9 +128,7 @@ namespace TranslatorBIB_RIS.Controllers
             {
                 if (title.Contains(r.Title))
                 {
-                    if(pages.StartPage<=r.End_page&&pages.StartPage>=r.Start_page
-                        && pages.EndPage <= r.End_page && pages.EndPage >= r.Start_page
-                        && pages.StartPage<=pages.EndPage)
+                    if(r.End_page<=pages.EndPage && r.Start_page>=pages.StartPage)
 
                     _recordServices.AddNewRecord(r);
                 }
