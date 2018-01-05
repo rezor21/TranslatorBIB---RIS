@@ -135,6 +135,7 @@ namespace TranslatorBIB_RIS.Services
                 r.tittleFiltr.check = false;
             }
         }
+      
        
 
     }
