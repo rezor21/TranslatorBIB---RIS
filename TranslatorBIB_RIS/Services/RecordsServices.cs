@@ -49,8 +49,8 @@ namespace TranslatorBIB_RIS.Services
                     values += headline.Value;
                 }
 
-                    if (record.Type != null) { if (!values.Contains("Type")) { _headLines.Add(new HeadLine("Typ", "Type")); } }
-                    if (record.Authors != null && record.Authors.Count > 0) { if (!values.Contains("Authors")) { _headLines.Add(new HeadLine("Autorzy", "Authors")); } }
+                    if (record.Type != null) { if (!values.Contains("Type")) { _headLines.Add(new HeadLine("Typ", "Type")); }  }
+                if (record.Authors != null && record.Authors.Count > 0) { if (!values.Contains("Authors")) { _headLines.Add(new HeadLine("Autorzy", "Authors")); } }
                     if (record.Title != null) { if (!values.Contains("Title")) { _headLines.Add(new HeadLine("Tytuł", "Title")); } }
                     if (record.BookTitle != null) { if (!values.Contains("BookTitle")) { _headLines.Add(new HeadLine("Tytuł serii/książki", "BookTitle")); } }
                     if (record.Start_page != 0) { if (!values.Contains("Start_page")) { _headLines.Add(new HeadLine("Strona początkowa", "Start_page")); } }
@@ -58,7 +58,7 @@ namespace TranslatorBIB_RIS.Services
                     if (record.Release_date != null) { if (!values.Contains("Release_date")) { _headLines.Add(new HeadLine("Data wydania", "Release_date")); } }
                     if (record.Editors != null && record.Editors.Count > 0) { if (!values.Contains("Editors")) { _headLines.Add(new HeadLine("Edytorzy", "Editors")); } }
                     if (record.Edition != null) { if (!values.Contains("Edition")) { _headLines.Add(new HeadLine("Edycja/Wydanie", "Edition")); } }
-                    if (record.Volume != null) { if (!values.Contains("Volume")) { _headLines.Add(new HeadLine("Wolumin/Część", "Volume")); } }
+                    if (record.Volume != 0) { if (!values.Contains("Volume")) { _headLines.Add(new HeadLine("Wolumin/Część", "Volume")); } }
                     if (record.Adress != null) { if (!values.Contains("Adress")) { _headLines.Add(new HeadLine("Miejsce wydania", "Adress")); } }
                     if (record.Publisher != null) { if (!values.Contains("Publisher")) { _headLines.Add(new HeadLine("Opublikowane przez", "Publisher")); } }
 

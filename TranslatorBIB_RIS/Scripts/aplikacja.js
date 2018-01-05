@@ -33,7 +33,7 @@
     })
 
             $scope.deleteOneBook = function (id) {
-                var url = "/api//records/" + id;
+                var url = "/api/records/" + id;
                 $http.delete(url)
                     .then(function (response) {
         $scope.del = response.data;
@@ -42,41 +42,7 @@
                 window.location = location.href;
             }
 
-            $scope.addOneRecord = function () {
-                var url = "/api/records/";
-                var param = JSON.stringify({
-        id: 0,
-                    Authors: $scope.Authors,
-                    Title: $scope.Title,
-                    Start_page: $scope.Start_page,
-                    End_page: $scope.End_page
-
-                })
-                $http.post(url, param)
-                    .then(function (response) {
-        $scope.dodaj = response.data;
-    })
-
-                window.location = location.href;
-            }
-
-            $scope.updateOneBook = function (id) {
-                var url = "/api/records/" + id;
-                var param = JSON.stringify({
-        id: id,
-                    title: $scope.title,
-                    pages: $scope.pages,
-                    Authors: $scope.Authors
-                })
-                $http.put(url, param)
-                    .then(function (response) {
-        $scope.aktu = response.data;
-    })
-
-                window.location = location.href;
-
-
-            }
+            
 
             $scope.getDate = function (date) {
                 return $filter('dateToISO')(date);
