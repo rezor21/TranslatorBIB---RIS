@@ -76,7 +76,7 @@
                             <li>
                                 <a href="#">
                                     
-                                   Od @Html.TextBoxFor(model => model.Pages.StartPage, new { @type = "number" })
+                                   Od @Html.TextBoxFor(model => model.Pages.StartPage, new { @type = "number", @min = "0", @Value = "" })
                                     
                                 </a>
                               
@@ -84,7 +84,7 @@
                             <li>
                                   <a href="#">
 
-                                    Do @Html.TextBoxFor(model => model.Pages.EndPage, new { @type = "number" })
+                                    Do @Html.TextBoxFor(model => model.Pages.EndPage, new { @type = "number", @min = "0", @Value = ""  })
 
                                   </a>
                             </li>
