@@ -61,8 +61,8 @@ namespace TranslatorBIB_RIS.Controllers
             };
             checkValue.Add(firstrecord);
             checkValue.Add(secondrecord);
-            pages.StartPage = 1;
-            pages.EndPage= 1;
+            pages.StartPage = null;
+            pages.EndPage= null;
             model.Pages = pages;
             model.CheckValue = checkValue;
             return View("Index", model);
