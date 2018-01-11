@@ -61,8 +61,8 @@ namespace TranslatorBIB_RIS.Controllers
             };
             checkValue.Add(firstrecord);
             checkValue.Add(secondrecord);
-            pages.StartPage = 1;
-            pages.EndPage= 1;
+            pages.StartPage = 0;
+            pages.EndPage= 0;
             model.Pages = pages;
             model.CheckValue = checkValue;
             return View("Index", model);
@@ -124,13 +124,24 @@ namespace TranslatorBIB_RIS.Controllers
                
             }
             _recordServices.Clear();
+            bool page = false;
+            if (pages.EndPage != 0 || pages.StartPage != 0)
+                page = true;
             foreach(var r in records)
             {
                 if (title.Contains(r.Title))
                 {
-                    if(r.End_page<=pages.EndPage && r.Start_page>=pages.StartPage)
+                    if (page)
+                    {
+                        if (r.End_page <= pages.EndPage && r.Start_page >= pages.StartPage)
+                            _recordServices.AddNewRecord(r);
 
-                    _recordServices.AddNewRecord(r);
+                    }
+                    else
+                    {
+                        _recordServices.AddNewRecord(r);
+                    }
+                   
                 }
                     
             }
