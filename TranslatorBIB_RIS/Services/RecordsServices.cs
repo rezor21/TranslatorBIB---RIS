@@ -141,6 +141,51 @@ namespace TranslatorBIB_RIS.Services
             }
             return foundRecords;
         }
+
+        public List<String> GetAllAuthors()
+        {
+            List<String> authors = new List<String>();
+            foreach(var r in _records)
+            {
+                for(int i = 0; i < r.Authors.Count; i++)
+                {
+                    if (!authors.Contains(r.Authors[i]))
+                    {
+                        authors.Add(r.Authors[i]);
+                    }
+                }
+            }
+            return authors;
+        }
+        public List<String> GetAllTittle()
+        {
+            List<String> tittle = new List<String>();
+            foreach(var r in _records)
+            {
+                if(!tittle.Contains(r.Title))
+                    tittle.Add(r.Title);
+            }
+            return tittle;
+        }
+        public List<Record> GetAllAuthorRecords(string author)
+        {
+            List<Record> foundRecords = new List<Record>();
+            foreach (var r in _records)
+            {
+               for(int i=0;i<r.Authors.Count;i++)
+                {
+                    if (r.Authors[i].Contains(author))
+                        foundRecords.Add(r);
+                }
+            }
+            return foundRecords;
+        }
+
+
+        public void Clear()
+        {
+            _records.Clear();
+        }
        
 
         
