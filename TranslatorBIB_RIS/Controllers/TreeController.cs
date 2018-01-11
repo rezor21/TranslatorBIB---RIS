@@ -33,14 +33,17 @@ namespace TranslatorBIB_RIS.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<TreeTag> model = new List<TreeTag>();
+            TreeTag model=new TreeTag();
+
+            List<TreeTagCheckValue> checkValue = new List<TreeTagCheckValue>();
+            TreeTagPages pages = new TreeTagPages();
             authors = _filtrServices.GetAllAuthorsFiltr();
             tittle = _filtrServices.GetAllTittleFiltr();
-          
+            
             
             
 
-            TreeTag firstrecord = new TreeTag
+            TreeTagCheckValue firstrecord = new TreeTagCheckValue
             {
                 Tag = "Autorzy",
                 Value = authors.Select(c => c.autor).ToList(),
@@ -50,21 +53,27 @@ namespace TranslatorBIB_RIS.Controllers
             };
             firstrecord.IsChecked = true;
 
-            TreeTag secondrecord = new TreeTag
+            TreeTagCheckValue secondrecord = new TreeTagCheckValue
             {
                 Tag = "Tytuły",
                 Value = tittle.Select(c => c.tittle).ToList(),
                 checkValue = tittle.Select(c => c.check).ToList(),
             };
-            model.Add(firstrecord);
-            model.Add(secondrecord);
+            checkValue.Add(firstrecord);
+            checkValue.Add(secondrecord);
+            pages.StartPage = 0;
+            pages.EndPage= 0;
+            model.Pages = pages;
+            model.CheckValue = checkValue;
             return View("Index", model);
         }
-
+      
         [HttpPost]
-        public ActionResult Index(List<TreeTag> model)
+        public ActionResult Index(TreeTag model)
         {
-            List<TreeTag> selectedRecords = model;
+            TreeTagPages pages = model.Pages;
+
+            List<TreeTagCheckValue> selectedRecords = model.CheckValue;
             List<Record> records = new List<Record>();          
             List<string> title = new List<string>();
             _filtrServices.clearMarks();
@@ -115,10 +124,26 @@ namespace TranslatorBIB_RIS.Controllers
                
             }
             _recordServices.Clear();
+            bool page = false;
+            if (pages.EndPage != 0 || pages.StartPage != 0)
+                page = true;
             foreach(var r in records)
             {
-                if(title.Contains(r.Title))
-                    _recordServices.AddNewRecord(r);
+                if (title.Contains(r.Title))
+                {
+                    if (page)
+                    {
+                        if (r.End_page <= pages.EndPage && r.Start_page >= pages.StartPage)
+                            _recordServices.AddNewRecord(r);
+
+                    }
+                    else
+                    {
+                        _recordServices.AddNewRecord(r);
+                    }
+                   
+                }
+                    
             }
             
            
