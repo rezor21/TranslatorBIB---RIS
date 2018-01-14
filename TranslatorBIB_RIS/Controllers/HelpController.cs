@@ -15,5 +15,22 @@ namespace TranslatorBIB_RIS.Controllers
 
             return View();
         }
+        
+        [HttpGet, Route("Help/DownloadD")]
+        public ActionResult DownloadD()
+        {
+            
+            string directoryPath = Server.MapPath("~/Dokumentacja/Dokumentacja.pdf");
+                return File(directoryPath, "application/octet-stream", "Dokumentacja.pdf");
+
+        }
+        [HttpGet, Route("Help/DownloadP")]
+        public ActionResult DownloadP()
+        {
+
+            string directoryPath = Server.MapPath("~/Dokumentacja/Podręcznik.pdf");
+            return File(directoryPath, "application/octet-stream", "Podręcznik.pdf");
+
+        }
     }
 }

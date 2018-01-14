@@ -120,7 +120,6 @@ namespace TranslatorBIB_RIS.Controllers
 
                 var path = System.IO.Path.GetTempPath() + "ris.ris";
 
-                //string directoryPath = Server.MapPath(path);
                 return File(path, "application/octet-stream", "ris.ris");
             }
             else
@@ -138,7 +137,6 @@ namespace TranslatorBIB_RIS.Controllers
 
                 var path = System.IO.Path.GetTempPath() + "bib.bib";
 
-                //string directoryPath = Server.MapPath(path);
                 return File(path, "application/octet-stream", "bib.bib");
             }
             else

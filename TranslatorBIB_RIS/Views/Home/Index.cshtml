@@ -110,7 +110,7 @@
 
                                 <tr ng-repeat="record in records | filter : search | orderBy:sortBy">
                                     <td ng-if="record.Type!=null">{{record.Type}}</td>
-                                    <td ng-if="record.Authors!=null && record.Authors.length>0"><span ng-repeat="author in record.Authors">{{author}}</span></td>
+                                    <td ng-if="record.Authors!=null && record.Authors.length>0"><span ng-repeat="author in record.Authors">{{author}}, </span></td>
                                     <td ng-if="record.Title!=null">{{record.Title}}</td>
                                     <td ng-if="record.BookTitle!=null">{{record.BookTitle}}</td>
                                     <td ng-if="record.Start_page!=null">{{record.Start_page}}</td>

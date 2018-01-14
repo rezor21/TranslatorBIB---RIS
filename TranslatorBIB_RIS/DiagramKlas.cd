@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TranslatorBIB_RIS.Models.AuthorFiltr">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Models\AuthorFiltr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.BibContein">
+    <Position X="6" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAIIAAAA=</HashCode>
+      <FileName>Models\BibContein.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Controllers.HomeController">
+    <Position X="11.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAABAAEAAAIAAEAAEAANAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Controllers.RecordsController">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQBAQAAAAAAAAAAAgCAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Controllers\RecordsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Controllers.TreeController">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAEAAAAQAEACAAAAAA=</HashCode>
+      <FileName>Controllers\TreeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.HeadLine">
+    <Position X="6" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\HeadLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.Record">
+    <Position X="2.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAAEAACAAEAAAACAhgQQAAAQIAQAAAAAA=</HashCode>
+      <FileName>Models\Record.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.RecordFiltr">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAIAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RecordFiltr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.RisRecord">
+    <Position X="4.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\RisRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.TittleFiltr">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\TittleFiltr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.TreeTag">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TreeTag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.TreeTagCheckValue">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAgAAAAAAAAAAAAAAAAAAAAAAAgAAAgCAA=</HashCode>
+      <FileName>Models\TreeTagCheckValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Models.TreeTagPages">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\TreeTagPages.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Services.BibServices">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAAIAAAAAAABAAAABAAEAAEEAAAQAAAAAEAAAA=</HashCode>
+      <FileName>Services\BibServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Services.FiltrServices">
+    <Position X="13" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACEAAAAgAAAAAAAAAAIAgAAAABEAAAAQAIAQAAIgAQ=</HashCode>
+      <FileName>Services\FiltrServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Services.RecordsServices">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEABAAAACACAAAAAAIACAIERAAAAIAQgQAAABAgQA=</HashCode>
+      <FileName>Services\RecordsServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Services.RisServices">
+    <Position X="11.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEACAIAAgAAGIAAAABgBAAEAAEAgAAwAAABAAAAAA=</HashCode>
+      <FileName>Services\RisServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TranslatorBIB_RIS.Controllers.HelpController">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HelpController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
